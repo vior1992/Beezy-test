@@ -1,16 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function navbar(props){
     return <div>
-        <div className="navbar__container">
+        <nav className="navbar__container">
             <div className="container__logo">
-                <a href="#" className="logo__link" onClick={props.onLogoClick}>Logo</a>
+                <Link to='/' className='link-logo'>Logo</Link>
             </div>
             <div className="container__link">
-                <a href="#" className="link__books" onClick={props.onBooksClick}>Books</a>
-                <a href="#" className="link__genres" onClick={props.onGenresClick}>Genres</a>
+                <Link to='/books' className='link__books'>Books</Link>
+                <Link to='/genres' className='link__genres'>Genres</Link>
             </div>
-        </div>
+        </nav>
     </div>  
 }
 
