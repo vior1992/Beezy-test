@@ -1,21 +1,19 @@
 //RUN APP
 import validateLogic from '../utilities/validate'
-import Book from '../data'
-import Genre from '../data'
 import Data from '../data'
+import Genres from '../components/Genres'
+const { Book, Genre, defaultData } = Data
 
-// import {
-//     Book,
-//     Genre,
-//     Data
-// } from '../data'
 
-sessionStorage.setItem('books', JSON.stringify(Data.defaultData.defaultBook))
-sessionStorage.setItem('genres', JSON.stringify(Data.defaultData.defaultGenre))
+
+sessionStorage.setItem('books',
+JSON.stringify(defaultData.defaultBook))
+sessionStorage.setItem('genres',
+JSON.stringify(defaultData.defaultGenre))
 
 const logic = {
-    _books: sessionStorage.getItem('books'),
-    _genres: sessionStorage.getItem('genres'),
+    _books: JSON.parse(sessionStorage.getItem('books')),
+    _genres: JSON.parse(sessionStorage.getItem('genres')),
     
     apiSimulator(){
         //add time delay
@@ -34,7 +32,7 @@ const logic = {
         const allBooks = logic._books
 
         allBooks.forEach(book => { 
-            if (book.title === title) throw Error ('Book title is in use')
+            if (book.title === title) throw Error('Book title is in use')
         })
 
         const book = new Book({ title, genre, price, author })
@@ -44,11 +42,22 @@ const logic = {
         sessionStorage.setItem('books', allBooks)
     },
 
-    editBook(){
+    editBook(id, title, genre, price, author){
+        validateLogic([{ key: 'id', value: id, type: Date }])
+        validateLogic([{ key: 'title', value: title, type: String }])
+        validateLogic([{ key: 'genre', value: genre, type: String }])
+        validateLogic([{ key: 'price', value: price, type: Number }])
+        validateLogic([{ key: 'author', value: author, type: String }])
 
+        // const bookEdited = logic.books.filter(id => books.id === id)
+
+        // bookEdited.title = title
+        // bookEdited.genre = genre
+        // bookEdited.price = price
+        // bookEdited.author = author
     },
 
-    deleteBook(){
+    deleteBook(id){
 
     },
 
@@ -72,19 +81,30 @@ const logic = {
         sessionStorage.setItem('genres', allGenres)
     },
 
-    editGenre(){
+    editGenre(id, name){
+        validateLogic([{ key: 'id', value: id, type: Date }])
+      
+        const genreEdited = logic._genres.filter(id => Genres.id === id)
 
+        genreEdited.name = name
     },
 
-    deleteGenre(){
+    deleteGenre(id){
+        validateLogic([{ key: 'id', value: id, type: Date }])
+      
+        const genreDeleted = logic._genres.findIndex(id => Genres.id === id)
 
+        genreDeleted.splice(genreDeleted, 1)
     },
 
     listBooksFiltered(genre) {
         validateLogic([{ key: 'genre', value: genre, type: String }])
 
         const books = logic._books
-        const booksFiltered = books.forEach(book => { return book.genre === genre })
+
+        if (genre === 'default') return books
+        
+        const booksFiltered = books.filter(book => book.genre === genre)
 
         return booksFiltered
     }

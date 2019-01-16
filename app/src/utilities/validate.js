@@ -1,4 +1,4 @@
-const { ValueError } = require('../errors')
+// const { ValueError } = require('../errors')
 
 function validateLogic(params) {
     params.forEach(({ key, value, type, optional }) => {
