@@ -7,19 +7,18 @@ import logic from '../../logic'
 class Genres extends Component {
     state = { error: null, genres: [] }
 
-    // componentDidMount() {
-    //     if (this.props) {
-
-    //         const { newGenre } = this.props
-
-    //         this.state.allGenres.push(newGenre)
-    //     }
-    // }
-
     componentDidMount() {
         const genres = logic.retrieveGenres()
 
         this.setState({ genres })  
+    }
+
+    handleDeleteClick = id => {
+        // Not Works Right
+            
+        const genres = logic.deleteGenre(id)
+        console.log(genres)
+        this.setState({ genres })
     }
 
     render() {
@@ -32,7 +31,7 @@ class Genres extends Component {
             </Link>
             <h1>Genres</h1>
             <div>
-                {this.state.genres.map(genre => <Genre name={genre.name}/>)}
+                {this.state.genres.map(genre => <Genre id={genre.id} name={genre.name} onEditClick={this.handleEditClick} onDeleteClick={this.handleDeleteClick} />)}
             </div>
         </div>
     }

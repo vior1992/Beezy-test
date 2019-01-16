@@ -7,19 +7,23 @@ class NewGenre extends Component {
     state = { error: null, addGenre: '', added: false }
 
     handleAddGenreChange = event => {
+        this.setState({ error: null, added: false })
+
         const addGenre = event.target.value.toLowerCase()
 
         this.setState({ addGenre })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault()
+        
+        try {
+            logic.addGenre(this.state.addGenre)
 
-        const { addGenre } = this.state
-
-        logic.addGenre(addGenre)
-
-        this.setState({ addGenre: '', added: true })
+            this.setState({ addGenre: '', added: true })
+        } catch (err) {
+            this.setState({ error: err.message })
+        }
     }
 
     render() {
@@ -37,7 +41,7 @@ class NewGenre extends Component {
                     />
                     <button type='submit'>New genre</button>
                 </form>
-                {this.state.added ? <h1>genre added with success</h1> : ''}
+                {this.state.added && !this.state.error ? <h1>genre added with success</h1> : <h1>{this.state.error}</h1>}
             </div>
         </div>
     }

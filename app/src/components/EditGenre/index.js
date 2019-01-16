@@ -2,22 +2,27 @@ import React, { Component } from 'react'
 import Navbar from '../Navbar'
 
 class EditGenre extends Component {
-    state = { error: null, AllGenres: [], addGenre: null }
+    state = { error: null, AllGenres: [], editGenre: null }
+
+    componentDidMount(){
+        const prueba = this.props //not works, pasarme el id desde Genre
+        console.log(prueba)
+    }
 
     handleAddGenreChange = event => {
-        const addGenre = event.target.value
+        const editGenre = event.target.value
 
-        this.setState({ addGenre })
+        this.setState({ editGenre })
     }
 
     handleSubmit = event => {
         event.preventDefault()
 
-        const { addGenre } = this.state 
+        const { editGenre } = this.state 
 
-        this.setState({ addGenre: '' })
+        this.setState({ editGenre: '' })
 
-        this.state.AllGenres.push(addGenre)
+        this.state.AllGenres.push(editGenre)
     }
 
     render() {

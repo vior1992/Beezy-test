@@ -2,9 +2,8 @@
 import validateLogic from '../utilities/validate'
 import Data from '../data'
 import Genres from '../components/Genres'
+
 const { Book, Genre, defaultData } = Data
-
-
 
 sessionStorage.setItem('books',
 JSON.stringify(defaultData.defaultBook))
@@ -67,7 +66,6 @@ const logic = {
 
     addGenre(name){
         validateLogic([{ key: 'name', value: name, type: String }])
-        debugger
         const allGenres = logic._genres
 
         allGenres.forEach(genre => { 
@@ -90,11 +88,13 @@ const logic = {
     },
 
     deleteGenre(id){
-        validateLogic([{ key: 'id', value: id, type: Date }])
-      
-        const genreDeleted = logic._genres.findIndex(id => Genres.id === id)
+        validateLogic([{ key: 'id', value: id, type: Number }])
+       
+        const genreDeleted = logic._genres
 
-        genreDeleted.splice(genreDeleted, 1)
+        const index = genreDeleted.findIndex(genre => genre.id === id)
+        
+        return genreDeleted.splice(index, 1)
     },
 
     listBooksFiltered(genre) {

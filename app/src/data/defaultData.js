@@ -1,7 +1,7 @@
 const defaultData = {
     defaultBook: [
         { 
-            id: Date.now(),
+            id: Date.now()+(1+Math.floor(Math.random() * 100) + 1),
             title: 'Crepusculo',
             genre: 'novela romantica',
             price: 10,
@@ -9,7 +9,7 @@ const defaultData = {
         },
 
         { 
-            id: Date.now(),
+            id: Date.now()+Math.floor(Math.random() * 100) + 1,
             title: 'Javascript',
             genre: 'comedia',
             price: 20,
@@ -19,12 +19,12 @@ const defaultData = {
 
     defaultGenre: [
         { 
-            id: Date.now(),
+            id: Date.now()+(1+Math.floor(Math.random() * 100) + 1),
             name: 'novela romantica'
         },
 
         { 
-            id: Date.now(),
+            id: Date.now()+Math.floor(Math.random() * 100) + 1,
             name: 'comedia'
         }
     ]
