@@ -9,10 +9,12 @@ class Book extends Component {
                 <h2>{this.props.price}</h2>
                 <h3>{this.props.author}</h3>  
             </div>
-            <div className="button__container">
-                <button>Edit</button>
-                <button>Delete</button>
-            </div>
+            {this.props.editMode ? 
+                <div className="button__container">
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </div> 
+            : ''}
         </div>
     }
 }

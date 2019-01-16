@@ -2,17 +2,24 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../Navbar'
 import Genre from '../Genre'
+import logic from '../../logic'
 
 class Genres extends Component {
-    state = { error: null, allGenres: [] }
+    state = { error: null, genres: [] }
+
+    // componentDidMount() {
+    //     if (this.props) {
+
+    //         const { newGenre } = this.props
+
+    //         this.state.allGenres.push(newGenre)
+    //     }
+    // }
 
     componentDidMount() {
-        if (this.props) {
+        const genres = logic.retrieveGenres()
 
-            const { newGenre } = this.props
-
-            this.state.allGenres.push(newGenre)
-        }
+        this.setState({ genres })  
     }
 
     render() {
@@ -25,7 +32,7 @@ class Genres extends Component {
             </Link>
             <h1>Genres</h1>
             <div>
-                {this.state.allGenres.map(genre => <Genre name={genre}/>)}
+                {this.state.genres.map(genre => <Genre name={genre.name}/>)}
             </div>
         </div>
     }

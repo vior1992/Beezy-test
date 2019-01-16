@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import Navbar from '../Navbar'
+import logic from '../../logic'
+
 
 class NewGenre extends Component {
-    state = { error: null, addGenre: '' }
+    state = { error: null, addGenre: '', added: false }
 
     handleAddGenreChange = event => {
         const addGenre = event.target.value.toLowerCase()
@@ -11,20 +12,19 @@ class NewGenre extends Component {
         this.setState({ addGenre })
     }
 
-    // handleSubmit = event => {
-    //     event.preventDefault()
+    handleSubmit = event => {
+        event.preventDefault()
 
-    //     const { addGenre } = this.state
+        const { addGenre } = this.state
 
-    //     this.setState({ addGenre: '' })
+        logic.addGenre(addGenre)
 
-    //     this.state.AllGenres.push(addGenre)
-    // }
+        this.setState({ addGenre: '', added: true })
+    }
 
     render() {
         return <div>
             <Navbar/>
-            
             <div className='addGenre_container'>
                 <h2>Add a genre:</h2>
                 <form onSubmit={this.handleSubmit}>
@@ -35,13 +35,9 @@ class NewGenre extends Component {
                         placeholder='Introduce a name (Max. 22 characters)' 
                         onChange={this.handleAddGenreChange}
                     />
-                    <Link to={{
-                        pathname:'/genres',
-                        addGenre: this.state.addGenre
-                    }}>
-                        <button type='submit'> New genre </button>
-                    </Link>
+                    <button type='submit'>New genre</button>
                 </form>
+                {this.state.added ? <h1>genre added with success</h1> : ''}
             </div>
         </div>
     }

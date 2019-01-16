@@ -67,7 +67,7 @@ const logic = {
 
     addGenre(name){
         validateLogic([{ key: 'name', value: name, type: String }])
-
+        debugger
         const allGenres = logic._genres
 
         allGenres.forEach(genre => { 
@@ -77,7 +77,7 @@ const logic = {
         const _genre = new Genre({ name })
 
         allGenres.push(_genre)
-
+        
         sessionStorage.setItem('genres', allGenres)
     },
 

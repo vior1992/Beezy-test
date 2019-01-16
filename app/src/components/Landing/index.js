@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Navbar from '../Navbar'
 import Book from '../Book'
-import logic from '../../logic';
+import logic from '../../logic'
 
 class Landing extends Component {
     state = { books: [], genres: [] }
@@ -39,7 +39,7 @@ class Landing extends Component {
                     ) : ''}
                 </select>
             
-            <div>{this.state.genres.length ? this.state.books.map(book => <Book title={book.title} genre={book.genre} price={book.price} author={book.author}/>) : ''}</div>
+            <div>{this.state.genres.length ? this.state.books.map(book => <Book title={book.title} genre={book.genre} price={book.price} author={book.author} editMode={false} />) : ''}</div>
             </div>
     }
 }
