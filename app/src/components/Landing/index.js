@@ -33,11 +33,11 @@ class Landing extends Component {
             />
             <h2>filter the list for genre:</h2>
             <select className='filter__selector' name='tags' id='' onChange={this.handleFilterChange}>
-                    <option selected value='default'>All books</option>
-                    {this.state.genres.length ? this.state.genres.map(genre => 
-                        <option value={genre.name}>{genre.name}</option>
-                    ) : ''}
-                </select>
+                <option selected value='default'>All books</option>
+                {this.state.genres.length ? this.state.genres.map(genre => 
+                    <option value={genre.name}>{genre.name}</option>
+                ) : ''}
+            </select>
             
             <div>{this.state.genres.length ? this.state.books.map(book => <Book title={book.title} genre={book.genre} price={book.price} author={book.author} editMode={false} />) : ''}</div>
             </div>

@@ -11,32 +11,6 @@ import EditBook from './components/EditBook'
 import './App.css'
 
 class App extends Component {
-  state = { error: null, allBooks: [], allGenres: []}
-
-  handleLogoClick = event => {
-    event.preventDefault()
-
-    this.props.history.push('/')
-
-    this.setState({ error: null })
-  }
-
-  handleBooksClick = event => {
-    event.preventDefault()
-
-    this.props.history.push('/books')
-
-    this.setState({ error: null })
-  }
-
-  handleGenresClick = event => {
-    event.preventDefault()
-
-    this.props.history.push('/genres')
-
-    this.setState({ error: null })
-  }
-
   render() {
     return (
       <div>

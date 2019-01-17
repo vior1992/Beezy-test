@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Navbar from '../Navbar'
 import logic from '../../logic'
 
-
 class NewGenre extends Component {
     state = { error: null, addGenre: '', added: false }
 
@@ -20,7 +19,7 @@ class NewGenre extends Component {
         try {
             logic.addGenre(this.state.addGenre)
 
-            this.setState({ addGenre: '', added: true })
+            this.setState({ added: true, addGenre: '' })
         } catch (err) {
             this.setState({ error: err.message })
         }
@@ -41,7 +40,7 @@ class NewGenre extends Component {
                     />
                     <button type='submit'>New genre</button>
                 </form>
-                {this.state.added && !this.state.error ? <h1>genre added with success</h1> : <h1>{this.state.error}</h1>}
+                {this.state.added && !this.state.error ? <h1>Genre '{this.state.addGenre}' created succesfully</h1> : <h1>{this.state.error}</h1>}
             </div>
         </div>
     }

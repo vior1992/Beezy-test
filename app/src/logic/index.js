@@ -25,13 +25,13 @@ const logic = {
     addBook(title, genre, price, author){
         validateLogic([{ key: 'title', value: title, type: String }])
         validateLogic([{ key: 'genre', value: genre, type: String }])
-        validateLogic([{ key: 'price', value: price, type: Number }])
+        validateLogic([{ key: 'price', value: price, type: String }])
         validateLogic([{ key: 'author', value: author, type: String }])
 
         const allBooks = logic._books
 
         allBooks.forEach(book => { 
-            if (book.title === title) throw Error('Book title is in use')
+            if (book.title === title) throw Error(`Book ${title} already exist`)
         })
 
         const book = new Book({ title, genre, price, author })
@@ -69,7 +69,7 @@ const logic = {
         const allGenres = logic._genres
 
         allGenres.forEach(genre => { 
-            if (genre.name === name) throw Error ('Book title is in use')
+            if (genre.name === name) throw Error (`genre '${name}' already exists`)
         })
 
         const _genre = new Genre({ name })

@@ -2,7 +2,7 @@ const defaultData = {
     defaultBook: [
         { 
             id: Date.now()+(1+Math.floor(Math.random() * 100) + 1),
-            title: 'Crepusculo',
+            title: 'crepusculo',
             genre: 'novela romantica',
             price: 10,
             author: 'RR Martin'
@@ -10,7 +10,7 @@ const defaultData = {
 
         { 
             id: Date.now()+Math.floor(Math.random() * 100) + 1,
-            title: 'Javascript',
+            title: 'javascript',
             genre: 'comedia',
             price: 20,
             author: 'Bill gates'

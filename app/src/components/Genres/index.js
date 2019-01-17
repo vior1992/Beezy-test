@@ -16,8 +16,10 @@ class Genres extends Component {
     handleDeleteClick = id => {
         // Not Works Right
             
-        const genres = logic.deleteGenre(id)
-        console.log(genres)
+        logic.deleteGenre(id)
+        
+        const genres = logic.retrieveGenres
+
         this.setState({ genres })
     }
 
@@ -31,7 +33,12 @@ class Genres extends Component {
             </Link>
             <h1>Genres</h1>
             <div>
-                {this.state.genres.map(genre => <Genre id={genre.id} name={genre.name} onEditClick={this.handleEditClick} onDeleteClick={this.handleDeleteClick} />)}
+                {this.state.genres.map(genre => <Genre 
+                    id={genre.id} 
+                    name={genre.name} 
+                    onEditClick={this.handleEditClick} 
+                    onDeleteClick={this.handleDeleteClick} 
+                />)}
             </div>
         </div>
     }
