@@ -21,7 +21,7 @@ class Books extends Component {
 
     handleDeleteClick = id => {            
         logic.deleteBook(id)
-        //
+        
         this.setState({ books: logic.listBooksFiltered(this.state.filter) })
     }
 

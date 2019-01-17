@@ -1,5 +1,3 @@
-// const { ValueError } = require('../errors')
-
 function validateLogic(params) {
     params.forEach(({ key, value, type, optional }) => {
         switch (type) {
@@ -22,10 +20,6 @@ function validateLogic(params) {
 
                 if (typeof value !== 'number') throw TypeError(`${value} is not a number`)
                 break
-            case Date:
-                if (optional && value === null) break
-
-                if (!(value instanceof Date)) throw TypeError(`${value} is not a Date`)
         }
     })
 }

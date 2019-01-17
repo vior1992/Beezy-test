@@ -14,7 +14,7 @@ class NewBook extends Component {
 
     componentDidMount() {
         const genres = logic.retrieveGenres()
-
+    
         this.setState({ genres })
     }
 
@@ -67,6 +67,7 @@ class NewBook extends Component {
             <Navbar/>
             <div className='addBook_container'>
                 <h2>Add a book:</h2>
+                {this.state.genres.length === 0 ? <h1>No genres, create a genre first</h1> : ""}
                 <form onSubmit={this.handleSubmit}>
                     <input className='container__input'
                         value={this.state.title} 

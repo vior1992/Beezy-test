@@ -1,7 +1,6 @@
 //RUN APP
 import validateLogic from '../utilities/validate'
 import Data from '../data'
-import Genres from '../components/Genres'
 
 const { Book, Genre, defaultData } = Data
 
@@ -22,11 +21,47 @@ const logic = {
         return logic._books 
     },
 
-    addBook(title, genre, price, author){
-        validateLogic([{ key: 'title', value: title, type: String }])
+    /**
+     * 
+     * @param {String} genre -> The name of the genre.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     * @returns {return} -> The books array with filtered books.
+     */
+    listBooksFiltered(genre) {
         validateLogic([{ key: 'genre', value: genre, type: String }])
-        validateLogic([{ key: 'price', value: price, type: String }])
-        validateLogic([{ key: 'author', value: author, type: String }])
+
+        if (genre === 'default') return logic._books
+        
+        const booksFiltered = logic._books.filter(book => book.genre === genre)
+
+        return booksFiltered
+    },
+
+     /**
+     * 
+     * @param {String} title -> The title of the book.
+     * @param {String} genre -> The genre of the book.
+     * @param {String} price -> The price of the book.
+     * @param {String} author -> The author of the book.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
+    addBook(title, genre, price, author){
+        validateLogic([
+            { key: 'title', value: title, type: String },
+            { key: 'genre', value: genre, type: String },
+            { key: 'price', value: price, type: String },
+            { key: 'author', value: author, type: String }
+        ])
 
         const allBooks = logic._books
 
@@ -38,15 +73,32 @@ const logic = {
 
         allBooks.push(book)
 
-        sessionStorage.setItem('books', allBooks)
+        sessionStorage.setItem('books',
+        JSON.stringify(allBooks))
     },
 
+    /**
+     * 
+     * @param {Number} id -> The id of the book.
+     * @param {String} title -> The title of the book.
+     * @param {String} genre -> The genre of the book.
+     * @param {String} price -> The price of the book.
+     * @param {String} author -> The author of the book.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     editBook(id, title, genre, price, author){
-        validateLogic([{ key: 'id', value: id, type: Date }])
-        validateLogic([{ key: 'title', value: title, type: String }])
-        validateLogic([{ key: 'genre', value: genre, type: String }])
-        validateLogic([{ key: 'price', value: price, type: Number }])
-        validateLogic([{ key: 'author', value: author, type: String }])
+        validateLogic([
+            { key: 'id', value: id, type: Number },
+            { key: 'title', value: title, type: String },
+            { key: 'genre', value: genre, type: String },
+            { key: 'price', value: price, type: String },
+            { key: 'author', value: author, type: String }
+        ])
 
         // const bookEdited = logic.books.filter(id => books.id === id)
 
@@ -56,6 +108,16 @@ const logic = {
         // bookEdited.author = author
     },
 
+    /**
+     * 
+     * @param {Number} id -> The id of the book.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     deleteBook(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
@@ -63,46 +125,129 @@ const logic = {
 
         const index = deleteBook.findIndex(book => book.id === id)
         
-        return deleteBook.splice(index, 1)
+        deleteBook.splice(index, 1)
+
+        sessionStorage.setItem('books',
+        JSON.stringify(deleteBook))
     },
 
+    /**
+     * 
+     * @param {String} name -> The name of the genre.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     deleteBookForGenre(name){
         validateLogic([{ key: 'name', value: name, type: String }])
        
-        const deleteBook = logic._books
+        const books = logic._books
 
-        const index = deleteBook.findIndex(book => book.genre === name)
+        const deletedBook = books.filter(book => book.genre === name)
         
-        return deleteBook.splice(index, 1)
+        deletedBook.forEach(_book => 
+            books.splice(books.findIndex(book => 
+                book.genre === _book.genre),1
+            )
+        )
+
+        sessionStorage.setItem('books',
+        JSON.stringify(deletedBook))
     },
 
     retrieveGenres(){
         return logic._genres
     },
 
+    /**
+     * 
+     * @param {String} name -> The name of the genre.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     addGenre(name){
         validateLogic([{ key: 'name', value: name, type: String }])
-        const allGenres = logic._genres
 
-        allGenres.forEach(genre => { 
+        const genres = logic._genres
+
+        genres.forEach(genre => { 
             if (genre.name === name) throw Error (`genre '${name}' already exists`)
         })
 
         const _genre = new Genre({ name })
 
-        allGenres.push(_genre)
+        genres.push(_genre)
         
-        sessionStorage.setItem('genres', allGenres)
+        sessionStorage.setItem('genres',
+        JSON.stringify(genres))
     },
 
+    /**
+     * @param {Number} id -> The id of the genre.
+     * @param {String} name -> The name of the genre.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     editGenre(id, name){
-        validateLogic([{ key: 'id', value: id, type: Date }])
-      
-        const genreEdited = logic._genres.filter(id => Genres.id === id)
+        validateLogic([
+            { key: 'id', value: id, type: Number },
+            { key: 'name', value: name, type: String }
+        ])
+
+        const genres = logic._genres
+
+        genres.forEach(genre => { 
+            if (genre.name === name) throw Error (`genre '${name}' already exists`)
+        })
+        
+        const genreEdited = logic._genres.find(genre => genre.id === id)
+
+        const oldName = genreEdited.name
 
         genreEdited.name = name
+
+        const index = genres.findIndex(genre => genre.id === id)
+        
+        genres.splice(index, 1)
+
+        genres.push(genreEdited) //Al hacer push cambia de orden OJO
+
+        const books = logic.retrieveBooks()
+
+        books.forEach(book => { 
+            if (book.genre === oldName) {
+                book.genre = name
+            }
+        })
+
+        sessionStorage.setItem('genres',
+        JSON.stringify(genres))
+
+        sessionStorage.setItem('books',
+        JSON.stringify(books))
     },
 
+    /**
+     * 
+     * @param {Number} id -> The id of the genre.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     deleteGenre(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
@@ -110,19 +255,10 @@ const logic = {
 
         const index = deleteGenre.findIndex(genre => genre.id === id)
         
-        return deleteGenre.splice(index, 1)
-    },
+        deleteGenre.splice(index, 1)
 
-    listBooksFiltered(genre) {
-        validateLogic([{ key: 'genre', value: genre, type: String }])
-
-        const books = logic._books
-
-        if (genre === 'default') return books
-        
-        const booksFiltered = books.filter(book => book.genre === genre)
-
-        return booksFiltered
+        sessionStorage.setItem('genres',
+        JSON.stringify(deleteGenre))
     }
 }
 

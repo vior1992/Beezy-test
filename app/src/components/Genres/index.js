@@ -11,11 +11,7 @@ class Genres extends Component {
         this.setState({ genres: logic.retrieveGenres() })  
     }
 
-    handleDeleteClick = (id, name) => {            
-        logic.deleteGenre(id)
-
-        logic.deleteBookForGenre(name)
-
+    handleRefresh = () => {            
         this.setState({ genres: logic.retrieveGenres() })
     }
 
@@ -32,8 +28,7 @@ class Genres extends Component {
                 {this.state.genres.map(genre => <Genre 
                     id={genre.id} 
                     name={genre.name} 
-                    onEditClick={this.handleEditClick} 
-                    onDeleteClick={this.handleDeleteClick} 
+                    onEditOrDelete={this.handleRefresh} 
                 />)}
             </div>
         </div>

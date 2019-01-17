@@ -8,7 +8,7 @@ class Landing extends Component {
 
     componentDidMount() {
         const books = logic.retrieveBooks()
-
+        console.log(books)
         this.setState({ books })
 
         const genres = logic.retrieveGenres()
