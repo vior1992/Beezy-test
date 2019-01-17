@@ -5,7 +5,7 @@ import Book from '../Book'
 import logic from '../../logic'
 
 class Books extends Component {
-    state = { books: [], genres: [], filter: '' }
+    state = { books: [], genres: [], filter: 'default' }
 
     componentDidMount() {
         this.setState({ books: logic.retrieveBooks() })  
@@ -21,7 +21,7 @@ class Books extends Component {
 
     handleDeleteClick = id => {            
         logic.deleteBook(id)
-
+        //
         this.setState({ books: logic.listBooksFiltered(this.state.filter) })
     }
 
