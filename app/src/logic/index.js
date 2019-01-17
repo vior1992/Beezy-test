@@ -57,7 +57,23 @@ const logic = {
     },
 
     deleteBook(id){
+        validateLogic([{ key: 'id', value: id, type: Number }])
+       
+        const deleteBook = logic._books
 
+        const index = deleteBook.findIndex(book => book.id === id)
+        
+        return deleteBook.splice(index, 1)
+    },
+
+    deleteBookForGenre(name){
+        validateLogic([{ key: 'name', value: name, type: String }])
+       
+        const deleteBook = logic._books
+
+        const index = deleteBook.findIndex(book => book.genre === name)
+        
+        return deleteBook.splice(index, 1)
     },
 
     retrieveGenres(){
@@ -90,11 +106,11 @@ const logic = {
     deleteGenre(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
-        const genreDeleted = logic._genres
+        const deleteGenre = logic._genres
 
-        const index = genreDeleted.findIndex(genre => genre.id === id)
+        const index = deleteGenre.findIndex(genre => genre.id === id)
         
-        return genreDeleted.splice(index, 1)
+        return deleteGenre.splice(index, 1)
     },
 
     listBooksFiltered(genre) {

@@ -11,8 +11,8 @@ class Book extends Component {
             </div>
             {this.props.editMode ? 
                 <div className="button__container">
-                    <button>Edit</button>
-                    <button>Delete</button>
+                    <button >Edit</button>
+                    <button onClick={() => this.props.onDeleteClick(this.props.id)}>Delete</button>
                 </div> 
             : ''}
         </div>

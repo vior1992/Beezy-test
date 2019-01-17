@@ -8,19 +8,15 @@ class Genres extends Component {
     state = { error: null, genres: [] }
 
     componentDidMount() {
-        const genres = logic.retrieveGenres()
-
-        this.setState({ genres })  
+        this.setState({ genres: logic.retrieveGenres() })  
     }
 
-    handleDeleteClick = id => {
-        // Not Works Right
-            
+    handleDeleteClick = (id, name) => {            
         logic.deleteGenre(id)
-        
-        const genres = logic.retrieveGenres
 
-        this.setState({ genres })
+        logic.deleteBookForGenre(name)
+
+        this.setState({ genres: logic.retrieveGenres() })
     }
 
     render() {

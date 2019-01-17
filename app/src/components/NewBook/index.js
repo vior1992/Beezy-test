@@ -104,7 +104,7 @@ class NewBook extends Component {
                     <button type='submit'>New Book</button>
                 </form>
                 {this.state.added && !this.state.error ? 
-                    <h1>Book {this.state.title} created succesfully</h1> :
+                    <h1>Book created succesfully</h1> :
                     <h1>{this.state.error}</h1>
                 }
             </div>

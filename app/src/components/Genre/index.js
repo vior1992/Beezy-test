@@ -12,7 +12,7 @@ class Genre extends Component {
                 {/* Link not works */}
                 <button>Edit</button>
             </Link> 
-                <button onClick={() => this.props.onDeleteClick(this.props.id)}>Delete</button>
+                <button onClick={() => this.props.onDeleteClick(this.props.id, this.props.name)}>Delete</button>
             </div>
         </div>
     }

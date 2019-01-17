@@ -40,7 +40,7 @@ class NewGenre extends Component {
                     />
                     <button type='submit'>New genre</button>
                 </form>
-                {this.state.added && !this.state.error ? <h1>Genre '{this.state.addGenre}' created succesfully</h1> : <h1>{this.state.error}</h1>}
+                {this.state.added && !this.state.error ? <h1>Genre created succesfully</h1> : <h1>{this.state.error}</h1>}
             </div>
         </div>
     }
