@@ -19,7 +19,7 @@ class Genres extends Component {
         return <div>
             <Navbar/>
             <Link to='/genres/new'>
-                <button type="button" onClick={this.state.allGenres}>
+                <button type="button">
                     New genre
                 </button>
             </Link>

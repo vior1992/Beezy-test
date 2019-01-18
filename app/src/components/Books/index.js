@@ -19,9 +19,11 @@ class Books extends Component {
         this.setState({ books: logic.listBooksFiltered(filter), filter: filter })
     }
 
-    handleDeleteClick = id => {            
-        logic.deleteBook(id)
-        
+    handleEditClick = () => {            
+        this.setState({ books: logic.listBooksFiltered(this.state.filter) })
+    }
+
+    handleDeleteClick = () => {            
         this.setState({ books: logic.listBooksFiltered(this.state.filter) })
     }
 
@@ -50,7 +52,7 @@ class Books extends Component {
                     genre={book.genre} 
                     price={book.price} 
                     author={book.author} 
-                    editMode={true}
+                    viewMode={false}
                     onEditClick={this.handleEditClick} 
                     onDeleteClick={this.handleDeleteClick} 
                 />)}

@@ -1,33 +1,14 @@
 import React, { Component } from 'react'
+import EditGenre from '../EditGenre'
 import logic from '../../logic'
 
 class Genre extends Component {
-    state = { error: null, editMode: false, name: '', editedSuccesfully: false}
+    state = { error: null, editMode: false, name: '' }
 
-    handleEditMode = () => {
-        this.setState({ editMode: true })
-    }
+    handlEndEditMode = () => {
+        this.setState({ editMode: false })
 
-    handleEditGenreChange = event => {
-        this.setState({ error: null })
-
-        const name = event.target.value.toLowerCase()
-
-        this.setState({ name })
-    }
-
-    handleSubmit = async event => {
-        event.preventDefault()
-        
-        try {
-            logic.editGenre(this.props.id, this.state.name)
-
-            this.setState({ editMode: false, name: '', editedSuccesfully: true })
-
-            this.props.onEditOrDelete()
-        } catch (err) {
-            this.setState({ error: err.message })
-        }
+        this.props.onEditOrDelete()
     }
 
     handleDeleteClick = () => {            
@@ -35,37 +16,27 @@ class Genre extends Component {
 
         logic.deleteBookForGenre(this.props.name)
 
-        this.setState({ genres: logic.retrieveGenres() })
-
         this.props.onEditOrDelete()
     }
 
     render() {
         return <div>
-            {this.state.editMode === true ?
-                <form onSubmit={this.handleSubmit}>
-                        <input className='container__input' 
-                            value={this.state.name} 
-                            type='text' 
-                            maxlength='22' 
-                            placeholder='Introduce a name (Max. 22 characters)' 
-                            onChange={this.handleEditGenreChange}
-                        />
-                        <button type='submit'>Save changes</button>
-                </form>
-                :
+            {this.state.editMode === false ?
                 <div>
                     <div className="genre__container">
                         <h1>{this.props.name}</h1>
                     </div>
                     <div className="button__container">
-                        <button onClick={this.handleEditMode}>Edit</button>
+                        <button onClick={() => this.setState({ editMode: true })}>Edit</button>
                         <button onClick={this.handleDeleteClick}>Delete</button>
                     </div>
                 </div>
+            :
+                <EditGenre 
+                    id={this.props.id} 
+                    onEndEditMode={this.handlEndEditMode}
+                />
             }
-            {this.state.error ? <h1>{this.state.error}</h1> : ''}
-            {this.state.editedSuccesfully && !this.state.error ? <h1>Name changed</h1> : ''}
         </div>
     }
 }

@@ -39,8 +39,17 @@ class Landing extends Component {
                 ) : ''}
             </select>
             
-            <div>{this.state.genres.length ? this.state.books.map(book => <Book title={book.title} genre={book.genre} price={book.price} author={book.author} editMode={false} />) : ''}</div>
+            <div>
+                {this.state.genres.length ? this.state.books.map(book => <Book 
+                    title={book.title} 
+                    genre={book.genre} 
+                    price={book.price} 
+                    author={book.author} 
+                    viewMode={true}
+                />) : 
+                ''}
             </div>
+        </div>
     }
 }
 

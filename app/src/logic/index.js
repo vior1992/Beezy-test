@@ -99,13 +99,27 @@ const logic = {
             { key: 'price', value: price, type: String },
             { key: 'author', value: author, type: String }
         ])
+        const books = logic._books
+        debugger
+        books.forEach(book => { 
+            if (book.title === title) throw Error (`genre '${title}' already exists`)
+        })
 
-        // const bookEdited = logic.books.filter(id => books.id === id)
+        const bookEdited = logic._books.filter(book => book.id === id)
 
-        // bookEdited.title = title
-        // bookEdited.genre = genre
-        // bookEdited.price = price
-        // bookEdited.author = author
+        bookEdited.title = title
+        bookEdited.genre = genre
+        bookEdited.price = price
+        bookEdited.author = author
+
+        const index = books.findIndex(book => book.id === id)
+        
+        books.splice(index, 1)
+
+        books.push(bookEdited)
+
+        sessionStorage.setItem('books',
+        JSON.stringify(books))
     },
 
     /**
