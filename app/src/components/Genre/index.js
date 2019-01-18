@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import EditGenre from '../EditGenre'
 import logic from '../../logic'
+import './styles.css'
 
 class Genre extends Component {
-    state = { error: null, editMode: false, name: '' }
+    state = { editMode: false }
 
     handlEndEditMode = () => {
         this.setState({ editMode: false })
@@ -22,8 +23,8 @@ class Genre extends Component {
     render() {
         return <div>
             {this.state.editMode === false ?
-                <div>
-                    <div className="genre__container">
+                <div className="genre__container">
+                    <div>
                         <h1>{this.props.name}</h1>
                     </div>
                     <div className="button__container">
@@ -32,10 +33,7 @@ class Genre extends Component {
                     </div>
                 </div>
             :
-                <EditGenre 
-                    id={this.props.id} 
-                    onEndEditMode={this.handlEndEditMode}
-                />
+                <EditGenre id={this.props.id} onEndEditMode={this.handlEndEditMode}/>
             }
         </div>
     }

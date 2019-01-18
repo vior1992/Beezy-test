@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './styles.css'
 
 function navbar(props){
     return <div>
         <nav className="navbar__container">
-            <div className="container__logo">
-                <Link to='/' className='link-logo'>Logo</Link>
+            <div>
+                <Link to='/' className='logo'>The Beezy Bookstore</Link>
             </div>
-            <div className="container__link">
+            <div>
                 <Link to='/books' className='link__books'>Books</Link>
                 <Link to='/genres' className='link__genres'>Genres</Link>
             </div>

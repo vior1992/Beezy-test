@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 
 class EditGenre extends Component {
-    state = { error:'', name: '', editedSuccesfully: '' }
+    state = { error:'', name: '', editedSuccesfully: false }
 
     handleNameChange = event => {
         this.setState({ error: null })

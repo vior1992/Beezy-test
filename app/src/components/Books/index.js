@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../Navbar'
 import Book from '../Book'
 import logic from '../../logic'
+import './styles.css'
 
 class Books extends Component {
     state = { books: [], genres: [], filter: 'default' }
@@ -19,11 +20,7 @@ class Books extends Component {
         this.setState({ books: logic.listBooksFiltered(filter), filter: filter })
     }
 
-    handleEditClick = () => {            
-        this.setState({ books: logic.listBooksFiltered(this.state.filter) })
-    }
-
-    handleDeleteClick = () => {            
+    handleRefresh = () => {            
         this.setState({ books: logic.listBooksFiltered(this.state.filter) })
     }
 
@@ -34,28 +31,31 @@ class Books extends Component {
             onBooksClick={this.props.onBooksClick} 
             onGenresClick={this.props.onGenresClick}
             />
-            <Link to='/books/new'> 
-                <button type="button">new Book</button>
-            </Link> 
-            <h2>filter Books for genre:</h2>
-            <select className='filter__selector' onChange={this.handleFilterChange}>
-                <option selected value='default'>All books</option>
-                {this.state.genres.length ? this.state.genres.map(genre => 
-                    <option value={genre.name}>{genre.name}</option>
-                ) : ''}
-            </select>
-            <h1>Books</h1>
-            <div>
-                {this.state.books.map(book => <Book 
-                    id={book.id}
-                    title={book.title} 
-                    genre={book.genre} 
-                    price={book.price} 
-                    author={book.author} 
-                    viewMode={false}
-                    onEditClick={this.handleEditClick} 
-                    onDeleteClick={this.handleDeleteClick} 
-                />)}
+            <div className="booksSite__container">
+                <div className='container__filter'>
+                    <h2>Filter for genre:</h2>
+                    <select onChange={this.handleFilterChange}>
+                        <option selected value='default'>All books</option>
+                        {this.state.genres.length ? this.state.genres.map(genre => 
+                            <option value={genre.name}>{genre.name}</option>
+                        ) : ''}
+                    </select>
+                </div>
+                <Link to='/books/new'> 
+                    <button className="container__button" type="button">New Book</button>
+                </Link> 
+                <div className='container__booklist'>
+                    {this.state.books.map(book => <Book 
+                        id={book.id}
+                        genres={this.state.genres}
+                        title={book.title} 
+                        genre={book.genre} 
+                        price={book.price} 
+                        author={book.author} 
+                        viewMode={false}
+                        onEditOrDelete={this.handleRefresh}
+                    />)}
+                </div>
             </div>
         </div>
     }
