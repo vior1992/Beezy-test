@@ -50,8 +50,6 @@ class Book extends Component {
                         genres={this.props.genres}
                     />
                 } 
-                {this.state.error ? <h1>{this.state.error}</h1> : ''}
-                {this.state.editedSuccesfully && !this.state.error ? <h1>Book edited</h1> : ''}
             </div>
         }
     }

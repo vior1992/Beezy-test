@@ -27,11 +27,7 @@ class Landing extends Component {
 
     render() {
         return <div>
-            <Navbar 
-            onLogoClick={this.props.onLogoClick} 
-            onBooksClick={this.props.onBooksClick} 
-            onGenresClick={this.props.onGenresClick}
-            />
+            <Navbar/>
             <div className='landing__container'>
                 <div className='container__filter'>
                     <h2>Filter for genre:</h2>

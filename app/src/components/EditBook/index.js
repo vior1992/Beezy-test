@@ -8,8 +8,7 @@ class EditBook extends Component {
         title: '', 
         genre: '', 
         price: '', 
-        author: '',
-        editedSuccesfully: false
+        author: ''
     }
     
     handleEditBookTitle = event => {
@@ -52,7 +51,7 @@ class EditBook extends Component {
         try {
             logic.editBook(this.props.id, title, genre, price, author)
 
-            this.setState({ title: '', genre: '', price: '', author: '', editedSuccesfully: true })
+            this.setState({ title: '', genre: '', price: '', author: '' })
 
             this.props.onEndEditMode()
 
@@ -99,7 +98,6 @@ class EditBook extends Component {
             <button type='submit'>Save changes</button>
             <button onClick={() => this.props.onEndEditMode()}>Cancel</button>
             {this.state.error ? <h1>{this.state.error}</h1> : ''}
-            {this.state.editedSuccesfully && !this.state.error ? <h1>Book edited</h1> : ''}
         </form>
     }
 }
