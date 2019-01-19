@@ -18,7 +18,7 @@ class NewGenre extends Component {
         event.preventDefault()
         
         try {
-            logic.addGenre(this.state.addGenre)
+            await logic.addGenre(this.state.addGenre)
 
             this.setState({ added: true, addGenre: '' })
         } catch (err) {
@@ -44,7 +44,10 @@ class NewGenre extends Component {
                         <button>Back</button>
                     </Link>
                 </form>
-                {this.state.added && !this.state.error ? <h1>Genre created succesfully</h1> : <h1>{this.state.error}</h1>}
+                {this.state.added && !this.state.error 
+                    ? <h1>Genre created succesfully</h1> 
+                    : <h1>{this.state.error}</h1>
+                }
             </div>
         </div>
     }

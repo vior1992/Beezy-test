@@ -8,12 +8,12 @@ import './styles.css'
 class Genres extends Component {
     state = { genres: [] }
 
-    componentDidMount() {
-        this.setState({ genres: logic.retrieveGenres() })  
+    componentDidMount = async () => {
+        this.setState({ genres: await logic.retrieveGenres() })  
     }
 
-    handleRefresh = () => {            
-        this.setState({ genres: logic.retrieveGenres() })
+    handleRefresh = async () => {            
+        this.setState({ genres: await logic.retrieveGenres() })
     }
 
     render() {
@@ -25,8 +25,7 @@ class Genres extends Component {
                 </Link>
                 <div className='container__genrelist'>
                     {this.state.genres.map(genre => <Genre 
-                        id={genre.id} 
-                        name={genre.name} 
+                        {...genre}
                         onEditOrDelete={this.handleRefresh} 
                     />)}
                 </div>

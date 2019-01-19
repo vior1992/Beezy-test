@@ -12,10 +12,8 @@ class Book extends Component {
         this.props.onEditOrDelete()
     }
 
-    handleDeleteClick = () => {      
-        console.log(this.props.id)
-
-        logic.deleteBook(this.props.id)
+    handleDeleteClick = async () => {      
+        await logic.deleteBook(this.props.id)
         
         this.props.onEditOrDelete()
     }
@@ -32,7 +30,8 @@ class Book extends Component {
             </div>
         } else {
             return <div>
-                {this.state.editMode === false ?
+                {this.state.editMode === false 
+                ?
                     <div className='book__container'>
                         <div>
                             <h1>{this.props.title}</h1>
@@ -47,9 +46,8 @@ class Book extends Component {
                     </div>
                 : 
                     <EditBook 
-                        id={this.props.id} 
+                        {...this.props}
                         onEndEditMode={this.handlEndEditMode}
-                        genres={this.props.genres}
                     />
                 } 
             </div>

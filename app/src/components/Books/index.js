@@ -8,21 +8,20 @@ import './styles.css'
 class Books extends Component {
     state = { books: [], genres: [], filter: 'default' }
 
-    componentDidMount() {
-        this.setState({ books: logic.retrieveBooks() })  
+    componentDidMount = async () => {
+        this.setState({ books: await logic.retrieveBooks() })  
 
-        this.setState({ genres: logic.retrieveGenres() })
+        this.setState({ genres: await logic.retrieveGenres() })
     }
 
-    handleFilterChange = event => {
+    handleFilterChange = async event => {
         const filter = event.target.value
 
-        this.setState({ books: logic.listBooksFiltered(filter), filter: filter })
-        console.log(this.state.books)
+        this.setState({ books: await logic.listBooksFiltered(filter), filter: filter })
     }
 
-    handleRefresh = () => {            
-        this.setState({ books: logic.listBooksFiltered(this.state.filter) })
+    handleRefresh = async () => {            
+        this.setState({ books: await logic.listBooksFiltered(this.state.filter) })
     }
 
     render() {
@@ -43,12 +42,8 @@ class Books extends Component {
                 </Link> 
                 <div className='container__booklist'>
                     {this.state.books.map(book => <Book 
-                        id={book.id}
+                        {...book}
                         genres={this.state.genres}
-                        title={book.title} 
-                        genre={book.genre} 
-                        price={book.price} 
-                        author={book.author} 
                         viewMode={false}
                         onEditOrDelete={this.handleRefresh}
                     />)}

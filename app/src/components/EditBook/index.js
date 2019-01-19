@@ -11,6 +11,12 @@ class EditBook extends Component {
         price: '', 
         author: ''
     }
+
+    componentDidMount = () => {
+        const { title, genre, price, author } = this.props
+
+        this.setState({ title, genre, price, author })
+    }
     
     handleEditBookTitle = event => {
         this.setState({ error: null })
@@ -44,13 +50,13 @@ class EditBook extends Component {
         this.setState({ author })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault()
 
         const { title, genre, price, author } = this.state
         
         try {
-            logic.editBook(this.props.id, title, genre, price, author)
+            await logic.editBook(this.props.id, title, genre, price, author)
 
             this.setState({ title: '', genre: '', price: '', author: '' })
 

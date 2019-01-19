@@ -8,22 +8,59 @@ import Data from '../data'
 
 const { Book, Genre, defaultData } = Data
 
-sessionStorage.setItem('books',
-JSON.stringify(defaultData.defaultBook))
-sessionStorage.setItem('genres',
-JSON.stringify(defaultData.defaultGenre))
+const genreStorage = {
+    _key: 'genre',
+    _storage: sessionStorage,
+
+    get: async () => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(JSON.parse(genreStorage._storage.getItem(genreStorage._key)))
+            }, Math.floor(Math.random() * 300) + 50)
+        })
+    },
+
+    set: async genres => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(genreStorage._storage.setItem(genreStorage._key, JSON.stringify(genres)))
+            }, Math.floor(Math.random() * 300) + 50)
+        })
+    }
+}
+
+const bookStorage = {
+    _key: 'books',
+    _storage: sessionStorage,
+
+    get: async () => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(JSON.parse(bookStorage._storage.getItem(bookStorage._key)))
+            }, Math.floor(Math.random() * 300) + 50)
+        })
+    },
+
+    set: async books => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(bookStorage._storage.setItem(bookStorage._key, JSON.stringify(books)))
+            }, Math.floor(Math.random() * 300) + 50)
+        })
+    }
+}
+
+const { books, genres } = defaultData
+
+bookStorage.set(books)
+genreStorage.set(genres)
 
 const logic = {
-    _books: JSON.parse(sessionStorage.getItem('books')),
-    _genres: JSON.parse(sessionStorage.getItem('genres')),
-    
-    apiSimulator(){
-        //add time delay
-    },
-
-    retrieveBooks(){
-        return logic._books 
-    },
+    /**
+     * 
+     * @returns {Promise.<Array>} -> The books array.
+     */ 
+    retrieveBooks: async () => await bookStorage.get(),
 
     /**
      * 
@@ -36,14 +73,14 @@ const logic = {
      * 
      * @returns {return} -> The books array with filtered books.
      */
-    listBooksFiltered(genre) {
+    async listBooksFiltered(genre) {
         validateLogic([{ key: 'genre', value: genre, type: String }])
 
-        if (genre === 'default') return logic._books
-        
-        const booksFiltered = logic._books.filter(book => book.genre === genre)
+        const books = await logic.retrieveBooks()
 
-        return booksFiltered
+        if (genre === 'default') return books
+        
+        return books.filter(book => book.genre === genre)
     },
 
      /**
@@ -59,7 +96,7 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    addBook(title, genre, price, author){
+    async addBook(title, genre, price, author){
         validateLogic([
             { key: 'title', value: title, type: String },
             { key: 'genre', value: genre, type: String },
@@ -67,18 +104,29 @@ const logic = {
             { key: 'author', value: author, type: String }
         ])
 
-        const allBooks = logic._books
+        const books = await logic.retrieveBooks()
 
-        allBooks.forEach(book => { 
+        books.forEach(book => { 
             if (book.title === title) throw Error(`Book ${title} already exist`)
         })
 
         const book = new Book({ title, genre, price, author })
 
-        allBooks.push(book)
+        books.push(book)
 
-        sessionStorage.setItem('books',
-        JSON.stringify(allBooks))
+        await bookStorage.set(books)
+    },
+
+    //COMMENTS
+    async editBookGenre(oldGenre, newGenre) {
+        //validate
+
+        const books = await logic.listBooksFiltered(oldGenre)
+
+        books.forEach(async book => {
+            const { id, title, price, author } = book
+            await logic.editBook(id, title, newGenre, price, author)
+        })
     },
 
     /**
@@ -95,7 +143,7 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    editBook(id, title, genre, price, author){
+    async editBook(id, title, genre, price, author){
         validateLogic([
             { key: 'id', value: id, type: Number },
             { key: 'title', value: title, type: String },
@@ -103,27 +151,20 @@ const logic = {
             { key: 'price', value: price, type: String },
             { key: 'author', value: author, type: String }
         ])
-        const books = logic._books
-        
-        books.forEach(book => { 
-            if (book.title === title) throw Error (`genre '${title}' already exists`)
-        })
+        const books = await logic.retrieveBooks()
 
-        const bookEdited = logic._books.filter(book => book.id === id)
+        const index = books.findIndex(book => book.id === id)
+
+        const bookEdited = books[index]
 
         bookEdited.title = title
         bookEdited.genre = genre
         bookEdited.price = price
         bookEdited.author = author
-
-        const index = books.findIndex(book => book.id === id)
         
-        books.splice(index, 1)
+        books[index] = bookEdited
 
-        books.push(bookEdited)
-
-        sessionStorage.setItem('books',
-        JSON.stringify(books))
+        await bookStorage.set(books)
     },
 
     /**
@@ -136,17 +177,16 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    deleteBook(id){
+    async deleteBook(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
-        const books = logic._books
+        const books = await logic.retrieveBooks()
 
         const deletedBook = books.findIndex(book => book.id === id)
         
         books.splice(deletedBook, 1)
 
-        sessionStorage.setItem('books',
-        JSON.stringify(books))
+        await bookStorage.set(books)
     },
 
     /**
@@ -159,26 +199,22 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    deleteBookForGenre(name){
+    async deleteBookForGenre(name){
         validateLogic([{ key: 'name', value: name, type: String }])
        
-        const books = logic._books
+        const books = await logic.retrieveBooks()
 
-        const _books = books.filter(book => book.genre === name)
-        
-        _books.forEach(_book => 
-            books.splice(books.findIndex(book => 
-                book.genre === _book.genre),1
-            )
-        )
+        const booksWithOutFilteredGenre = books
+            .filter(book => book.genre !== name)
 
-        sessionStorage.setItem('books',
-        JSON.stringify(_books))
+        await bookStorage.set(booksWithOutFilteredGenre)
     },
 
-    retrieveGenres(){
-        return logic._genres
-    },
+    /**
+     * 
+     * @returns {Promise.<Array>} -> The genres array.
+     */ 
+    retrieveGenres: async () => await genreStorage.get(),
 
     /**
      * 
@@ -190,21 +226,20 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    addGenre(name){
+    async addGenre(name){
         validateLogic([{ key: 'name', value: name, type: String }])
 
-        const genres = logic._genres
+        const genres = await logic.retrieveGenres()
 
         genres.forEach(genre => { 
-            if (genre.name === name) throw Error (`genre '${name}' already exists`)
+            if (genre.name === name) throw Error (`add genre genre '${name}' already exists`)
         })
 
-        const _genre = new Genre({ name })
+        const genre = new Genre({ name })
 
-        genres.push(_genre)
+        genres.push(genre)
         
-        sessionStorage.setItem('genres',
-        JSON.stringify(genres))
+        await genreStorage.set(genres)
     },
 
     /**
@@ -217,43 +252,31 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    editGenre(id, name){
+    async editGenre(id, name){
         validateLogic([
             { key: 'id', value: id, type: Number },
             { key: 'name', value: name, type: String }
         ])
 
-        const genres = logic._genres
+        const genres = await logic.retrieveGenres()
 
         genres.forEach(genre => { 
-            if (genre.name === name) throw Error (`genre '${name}' already exists`)
+            if (genre.name === name) throw Error (`edit genre '${name}' already exists`)
         })
         
-        const genreEdited = logic._genres.find(genre => genre.id === id)
+        const index = genres.findIndex(genre => genre.id === id)
 
-        const oldName = genreEdited.name
+        const genreEdited = genres[index]
+
+        const { name: oldName } = genreEdited
 
         genreEdited.name = name
-
-        const index = genres.findIndex(genre => genre.id === id)
         
-        genres.splice(index, 1)
+        genres[index] = genreEdited
+        
+        await genreStorage.set(genres)
 
-        genres.push(genreEdited) //Al hacer push cambia de orden OJO
-
-        const books = logic.retrieveBooks()
-
-        books.forEach(book => { 
-            if (book.genre === oldName) {
-                book.genre = name
-            }
-        })
-
-        sessionStorage.setItem('genres',
-        JSON.stringify(genres))
-
-        sessionStorage.setItem('books',
-        JSON.stringify(books))
+        await logic.editBookGenre(oldName, name)
     },
 
     /**
@@ -266,17 +289,16 @@ const logic = {
      * @throws {TypeError} -> On not number data.
      * 
      */
-    deleteGenre(id){
+    async deleteGenre(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
-        const genres = logic._genres
+        const genres = await logic.retrieveGenres()
 
         const deletedGenre = genres.findIndex(genre => genre.id === id)
         
         genres.splice(deletedGenre, 1)
 
-        sessionStorage.setItem('genres',
-        JSON.stringify(genres))
+        await genreStorage.set(genres)
     }
 }
 
@@ -285,4 +307,3 @@ export default logic
 
 //For run the test, uncomment this:
 // module.exports = logic
-

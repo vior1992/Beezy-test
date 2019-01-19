@@ -1,5 +1,5 @@
 const defaultData = {
-    defaultBook: [
+    books: [
         { 
             id: Date.now()+(1+Math.floor(Math.random() * 100) + 1),
             title: 'crepusculo',
@@ -17,7 +17,7 @@ const defaultData = {
         }
     ],
 
-    defaultGenre: [
+    genres: [
         { 
             id: Date.now()+(1+Math.floor(Math.random() * 100) + 1),
             name: 'novela romantica'

@@ -5,19 +5,21 @@ import logic from '../../logic'
 import './styles.css'
 
 class NewBook extends Component {
-    state = { error: null,
+    state = { 
+        loaded: false,
+        error: null,
         genres: [],
         title: '',
         genre: '',
         price: '', 
         author:'', 
-        added: false 
+        added: false
     }
 
-    componentDidMount() {
-        const genres = logic.retrieveGenres()
+    componentDidMount = async () => {
+        const genres = await logic.retrieveGenres()
     
-        this.setState({ genres })
+        this.setState({ genres, loaded: true })
     }
 
     handleTitleChange = event => {
@@ -50,13 +52,13 @@ class NewBook extends Component {
         this.setState({ author })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault()
 
         const { title, genre, price, author } = this.state
         
         try {
-            logic.addBook(title, genre, price, author)
+            await logic.addBook(title, genre, price, author)
 
             this.setState({ added: true, title: '', genre: '', price: '', author: '' })
         } catch (err) {
@@ -69,7 +71,10 @@ class NewBook extends Component {
             <Navbar/>
             <div className='newBookSite__container'>
                 <h2>Create book:</h2>
-                {this.state.genres.length === 0 ? <h1 className='error'>No genres, create a genre first</h1> : ""}
+                {this.state.loaded && this.state.genres.length === 0 
+                    ? <h1 className='error'>No genres, create a genre first</h1> 
+                    : ""
+                }
                 <form className='container__formulary' onSubmit={this.handleSubmit}>
                     <input className='formulary__input'
                         value={this.state.title} 
@@ -110,9 +115,9 @@ class NewBook extends Component {
                             <button className='button'>Back</button>
                         </Link>
                     </div>
-                    {this.state.added && !this.state.error ? 
-                        <h1 className='message'>Book created succesfully</h1> :
-                        <h1 className='error'>{this.state.error}</h1>
+                    {this.state.added && !this.state.error 
+                        ? <h1 className='message'>Book created succesfully</h1> 
+                        : <h1 className='error'>{this.state.error}</h1>
                     }
                 </form>
             </div>

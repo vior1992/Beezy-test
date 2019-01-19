@@ -7,20 +7,20 @@ import './styles.css'
 class Landing extends Component {
     state = { books: [], genres: [] }
 
-    componentDidMount() {
-        const books = logic.retrieveBooks()
+    async componentDidMount() {
+        const books = await logic.retrieveBooks()
 
         this.setState({ books })
 
-        const genres = logic.retrieveGenres()
+        const genres = await logic.retrieveGenres()
 
         this.setState({ genres })     
     }
 
-    handleFilterChange = event => {
+    handleFilterChange = async event => {
         const filter = event.target.value
 
-        const books = logic.listBooksFiltered(filter)
+        const books = await logic.listBooksFiltered(filter)
 
         this.setState({ books })
     }
@@ -40,10 +40,7 @@ class Landing extends Component {
                 </div>
                 <div className='container__booklist'>
                     {this.state.genres.length ? this.state.books.map(book => <Book 
-                        title={book.title} 
-                        genre={book.genre} 
-                        price={book.price} 
-                        author={book.author} 
+                        {...book}
                         viewMode={true}
                     />) : 
                     ''}

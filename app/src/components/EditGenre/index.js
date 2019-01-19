@@ -5,6 +5,12 @@ import './styles.css'
 class EditGenre extends Component {
     state = { error:'', name: '' }
 
+    componentDidMount = () => {
+        const name = this.props.name
+
+        this.setState({ name })
+    }
+
     handleNameChange = event => {
         this.setState({ error: null })
 
@@ -13,11 +19,11 @@ class EditGenre extends Component {
         this.setState({ name })
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         event.preventDefault()
         
         try {
-            logic.editGenre(this.props.id, this.state.name)
+            await logic.editGenre(this.props.id, this.state.name)
 
             this.setState({ name: '' })
 

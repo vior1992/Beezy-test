@@ -5,8 +5,8 @@ const logic = require('.')
 
 describe('test logic', () => {
     describe('retrieveBooks', () => {
-        it('should succed on correct data(retrieve all books)', () => {
-            const books = logic.retrieveBooks()
+        it('should succed on correct data(retrieve all books)', async () => {
+            const books = await logic.retrieveBooks()
 
             expect(books).to.be.an('array')
             expect(books.length).to.be.equal(2)
@@ -15,18 +15,18 @@ describe('test logic', () => {
     })
 
     describe('listBooksFiltered', () => {
-        it('should succed on correct data(retrieve books filtered for genre)',() => {
+        it('should succed on correct data(retrieve books filtered for genre)', async () => {
             const genre = 'comedia'
-            const books = logic.listBooksFiltered(genre)
+            const books = await logic.listBooksFiltered(genre)
 
             expect(books).to.be.an('array')
             expect(books.length).to.be.equal(1)
             expect(books[0].title).to.be.equal('javascript')
         })
 
-        it('should succed on correct data(retrieve all books on default filter)', () => {
+        it('should succed on correct data(retrieve all books on default filter)', async () => {
             const genre = 'default'
-            const books = logic.listBooksFiltered(genre)
+            const books = await logic.listBooksFiltered(genre)
 
             expect(books).to.be.an('array')
             expect(books.length).to.be.equal(2)

@@ -12,17 +12,18 @@ class Genre extends Component {
         this.props.onEditOrDelete()
     }
 
-    handleDeleteClick = () => {            
-        logic.deleteGenre(this.props.id)
+    handleDeleteClick = async () => {            
+        await logic.deleteGenre(this.props.id)
 
-        logic.deleteBookForGenre(this.props.name)
+        await logic.deleteBookForGenre(this.props.name)
 
         this.props.onEditOrDelete()
     }
 
     render() {
         return <div>
-            {this.state.editMode === false ?
+            {this.state.editMode === false 
+            ?
                 <div className="genre__container">
                     <div>
                         <h1>{this.props.name}</h1>
@@ -33,7 +34,10 @@ class Genre extends Component {
                     </div>
                 </div>
             :
-                <EditGenre id={this.props.id} onEndEditMode={this.handlEndEditMode}/>
+                <EditGenre 
+                    {...this.props}
+                    onEndEditMode={this.handlEndEditMode}
+                />
             }
         </div>
     }
