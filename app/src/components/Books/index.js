@@ -27,8 +27,8 @@ class Books extends Component {
     render() {
         return <div>
             <Navbar/>
-            <div className="booksSite__container">
-                <div className='container__filter'>
+            <div className="books__container">
+                <div className='books__filter'>
                     <h2>Filter for genre:</h2>
                     <select onChange={this.handleFilterChange}>
                         <option selected value='default'>All books</option>
@@ -38,9 +38,9 @@ class Books extends Component {
                     </select>
                 </div>
                 <Link to='/books/new'> 
-                    <button className="container__button" type="button">New Book</button>
+                    <button className="books__newButton" type="button">New Book</button>
                 </Link> 
-                <div className='container__booklist'>
+                <div className='books__booklist'>
                     {this.state.books.map(book => <Book 
                         {...book}
                         genres={this.state.genres}

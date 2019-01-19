@@ -20,28 +20,28 @@ class Book extends Component {
 
     render() {
         if (this.props.viewMode === true) {
-            return <div>
+            return <div className='book'>
                 <div className='book__container'>
-                    <h1>{this.props.title}</h1>
-                    <h2>Genre: {this.props.genre}</h2>
-                    <h2>Price: {this.props.price}€</h2>
-                    <h3>Author: {this.props.author}</h3>  
+                    <h1 className='book__title'>{this.props.title}</h1>
+                    <h2 className='book__genre'>Genre: {this.props.genre}</h2>
+                    <h2 className='book__price'>Price: {this.props.price}€</h2>
+                    <h3 className='book__author'>Author: {this.props.author}</h3>  
                 </div>
             </div>
         } else {
-            return <div>
+            return <div className='book'>
                 {this.state.editMode === false 
                 ?
                     <div className='book__container'>
                         <div>
-                            <h1>{this.props.title}</h1>
-                            <h2>Genre: {this.props.genre}</h2>
-                            <h2>Price: {this.props.price}€</h2>
-                            <h3>Author: {this.props.author}</h3>  
+                            <h1 className='book__title'>{this.props.title}</h1>
+                            <h2 className='book__genre'> Genre: {this.props.genre}</h2>
+                            <h2 className='book__author'>Author: {this.props.author}</h2>
+                            <h2 className='book__price'>Price: {this.props.price}€</h2>
                         </div>
-                        <div className='container__buttons'>
-                            <button className='buttons' onClick={() => this.setState({ editMode: true })}>Edit</button>
-                            <button className='buttons' onClick={this.handleDeleteClick}>Delete</button>
+                        <div className='book__buttons'>
+                            <button className='buttons__edit' onClick={() => this.setState({ editMode: true })}>Edit</button>
+                            <button className='buttons__delete' onClick={this.handleDeleteClick}>Delete</button>
                         </div>
                     </div>
                 : 
