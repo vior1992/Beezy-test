@@ -9,4 +9,12 @@
   border-radius: 10px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1); }
 
+.container__buttons {
+  border-top: 2px solid black; }
+
+.buttons {
+  width: 100px;
+  height: 30px;
+  border: none; }
+
 /*# sourceMappingURL=styles.css.map */

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
+import './styles.css'
 
 class EditGenre extends Component {
     state = { error:'', name: '' }
@@ -28,19 +29,22 @@ class EditGenre extends Component {
     }
 
     render() {
-        return <form onSubmit={this.handleSubmit}>
-            <input className='container__input' 
-                value={this.state.name} 
-                type='text' 
-                maxlength='22' 
-                placeholder='Introduce a name (Max. 22 characters)' 
-                onChange={this.handleNameChange}
-            />
-            <button type='submit'>Save changes</button>
-            <button onClick={() => this.props.onEndEditMode()}>Cancel</button>
-            {this.state.error ? <h1>{this.state.error}</h1> : ''}
-        </form> 
-        
+        return <div>
+            <form className='editGenre__container'onSubmit={this.handleSubmit}>
+                <input className='container__input' 
+                    value={this.state.name} 
+                    type='text' 
+                    maxlength='18' 
+                    placeholder='Introduce a name (Max. 18 characters)' 
+                    onChange={this.handleNameChange}
+                />
+                {this.state.error ? <h1 className='error'>{this.state.error}</h1> : ''}
+                <div className='container__buttons'>
+                    <button className='buttons' type='submit'>Save changes</button>
+                    <button className='buttons' onClick={() => this.props.onEndEditMode()}>Cancel</button>
+                </div>
+            </form> 
+        </div>
     }
 }
 

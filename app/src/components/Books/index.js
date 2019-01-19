@@ -15,9 +15,10 @@ class Books extends Component {
     }
 
     handleFilterChange = event => {
-        let filter = event.target.value
+        const filter = event.target.value
 
         this.setState({ books: logic.listBooksFiltered(filter), filter: filter })
+        console.log(this.state.books)
     }
 
     handleRefresh = () => {            

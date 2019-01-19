@@ -5,4 +5,8 @@ class Genre {
     }
 }
 
+//For run the app, uncomment this:
 export default Genre
+
+//For run the test, uncomment this:
+// module.exports = Genre

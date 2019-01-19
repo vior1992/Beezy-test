@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../Navbar'
 import logic from '../../logic'
 
@@ -39,6 +40,9 @@ class NewGenre extends Component {
                         onChange={this.handleAddGenreChange}
                     />
                     <button type='submit'>New genre</button>
+                    <Link to='/genres'>
+                        <button>Back</button>
+                    </Link>
                 </form>
                 {this.state.added && !this.state.error ? <h1>Genre created succesfully</h1> : <h1>{this.state.error}</h1>}
             </div>

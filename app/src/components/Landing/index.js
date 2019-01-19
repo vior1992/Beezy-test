@@ -18,7 +18,7 @@ class Landing extends Component {
     }
 
     handleFilterChange = event => {
-        let filter = event.target.value
+        const filter = event.target.value
 
         const books = logic.listBooksFiltered(filter)
 

@@ -30,4 +30,8 @@ const defaultData = {
     ]
 }
 
+//For run the app, uncomment this:
 export default defaultData
+
+//For run the test, uncomment this:
+// module.exports = defaultData

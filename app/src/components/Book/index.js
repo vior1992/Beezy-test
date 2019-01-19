@@ -12,7 +12,9 @@ class Book extends Component {
         this.props.onEditOrDelete()
     }
 
-    handleDeleteClick = () => {            
+    handleDeleteClick = () => {      
+        console.log(this.props.id)
+
         logic.deleteBook(this.props.id)
         
         this.props.onEditOrDelete()
@@ -21,7 +23,7 @@ class Book extends Component {
     render() {
         if (this.props.viewMode === true) {
             return <div>
-                <div className="book__container">
+                <div className='book__container'>
                     <h1>{this.props.title}</h1>
                     <h2>Genre: {this.props.genre}</h2>
                     <h2>Price: {this.props.price}€</h2>
@@ -31,16 +33,16 @@ class Book extends Component {
         } else {
             return <div>
                 {this.state.editMode === false ?
-                    <div className="book__container">
+                    <div className='book__container'>
                         <div>
                             <h1>{this.props.title}</h1>
                             <h2>Genre: {this.props.genre}</h2>
                             <h2>Price: {this.props.price}€</h2>
                             <h3>Author: {this.props.author}</h3>  
                         </div>
-                        <div>
-                            <button onClick={() => this.setState({ editMode: true })}>Edit</button>
-                            <button onClick={this.handleDeleteClick}>Delete</button>
+                        <div className='container__buttons'>
+                            <button className='buttons' onClick={() => this.setState({ editMode: true })}>Edit</button>
+                            <button className='buttons' onClick={this.handleDeleteClick}>Delete</button>
                         </div>
                     </div>
                 : 

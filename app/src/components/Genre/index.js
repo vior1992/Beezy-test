@@ -27,9 +27,9 @@ class Genre extends Component {
                     <div>
                         <h1>{this.props.name}</h1>
                     </div>
-                    <div className="button__container">
-                        <button onClick={() => this.setState({ editMode: true })}>Edit</button>
-                        <button onClick={this.handleDeleteClick}>Delete</button>
+                    <div className="container__buttons">
+                        <button className='buttons' onClick={() => this.setState({ editMode: true })}>Edit</button>
+                        <button className='buttons' onClick={this.handleDeleteClick}>Delete</button>
                     </div>
                 </div>
             :

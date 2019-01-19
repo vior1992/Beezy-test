@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../Navbar'
 import logic from '../../logic'
+import './styles.css'
 
 class NewBook extends Component {
     state = { error: null,
@@ -65,11 +67,11 @@ class NewBook extends Component {
     render() {
         return <div>
             <Navbar/>
-            <div className='addBook_container'>
-                <h2>Add a book:</h2>
-                {this.state.genres.length === 0 ? <h1>No genres, create a genre first</h1> : ""}
-                <form onSubmit={this.handleSubmit}>
-                    <input className='container__input'
+            <div className='newBookSite__container'>
+                <h2>Create book:</h2>
+                {this.state.genres.length === 0 ? <h1 className='error'>No genres, create a genre first</h1> : ""}
+                <form className='container__formulary' onSubmit={this.handleSubmit}>
+                    <input className='formulary__input'
                         value={this.state.title} 
                         type='text' 
                         maxlength='30' 
@@ -78,7 +80,7 @@ class NewBook extends Component {
                     />
                     <select 
                         value={this.state.genre}
-                        className='filter__selector' 
+                        className='formulary__selector' 
                         name='tags' 
                         id='' 
                         onChange={this.handleGenreChange}
@@ -88,26 +90,31 @@ class NewBook extends Component {
                             <option value={genre.name}>{genre.name}</option>
                         )}
                     </select>
-                    <input className='container__input'
+                    <input className='formulary__input'
                         value={this.state.price} 
                         type='number' 
                         maxlength="5"
                         placeholder='Introduce a price (Max. 5 characters)' 
                         onChange={this.handlePriceChange}
                     />
-                    <input className='container__input'
+                    <input className='formulary__input'
                         value={this.state.author} 
                         type='text' 
                         maxlength='22' 
                         placeholder='Introduce a author (Max. 22 characters)' 
                         onChange={this.handleAuthorChange}
                     />
-                    <button type='submit'>New Book</button>
+                    <div className='button__container'>
+                        <button className='button' type='submit'>New Book</button>
+                        <Link to='/books'>
+                            <button className='button'>Back</button>
+                        </Link>
+                    </div>
+                    {this.state.added && !this.state.error ? 
+                        <h1 className='message'>Book created succesfully</h1> :
+                        <h1 className='error'>{this.state.error}</h1>
+                    }
                 </form>
-                {this.state.added && !this.state.error ? 
-                    <h1>Book created succesfully</h1> :
-                    <h1>{this.state.error}</h1>
-                }
             </div>
         </div>
     }

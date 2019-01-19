@@ -8,4 +8,8 @@ class Book {
     }
 }
 
+//For run the app, uncomment this:
 export default Book
+
+//For run the test, uncomment this:
+// module.exports = Book

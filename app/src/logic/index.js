@@ -1,6 +1,10 @@
-//RUN APP
+//For run the app, uncomment this:
 import validateLogic from '../utilities/validate'
 import Data from '../data'
+
+//For run the test, uncomment this:
+// const validateLogic = require('../utilities/validate')
+// const Data = require('../data')
 
 const { Book, Genre, defaultData } = Data
 
@@ -100,7 +104,7 @@ const logic = {
             { key: 'author', value: author, type: String }
         ])
         const books = logic._books
-        debugger
+        
         books.forEach(book => { 
             if (book.title === title) throw Error (`genre '${title}' already exists`)
         })
@@ -135,14 +139,14 @@ const logic = {
     deleteBook(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
-        const deleteBook = logic._books
+        const books = logic._books
 
-        const index = deleteBook.findIndex(book => book.id === id)
+        const deletedBook = books.findIndex(book => book.id === id)
         
-        deleteBook.splice(index, 1)
+        books.splice(deletedBook, 1)
 
         sessionStorage.setItem('books',
-        JSON.stringify(deleteBook))
+        JSON.stringify(books))
     },
 
     /**
@@ -160,16 +164,16 @@ const logic = {
        
         const books = logic._books
 
-        const deletedBook = books.filter(book => book.genre === name)
+        const _books = books.filter(book => book.genre === name)
         
-        deletedBook.forEach(_book => 
+        _books.forEach(_book => 
             books.splice(books.findIndex(book => 
                 book.genre === _book.genre),1
             )
         )
 
         sessionStorage.setItem('books',
-        JSON.stringify(deletedBook))
+        JSON.stringify(_books))
     },
 
     retrieveGenres(){
@@ -265,20 +269,20 @@ const logic = {
     deleteGenre(id){
         validateLogic([{ key: 'id', value: id, type: Number }])
        
-        const deleteGenre = logic._genres
+        const genres = logic._genres
 
-        const index = deleteGenre.findIndex(genre => genre.id === id)
+        const deletedGenre = genres.findIndex(genre => genre.id === id)
         
-        deleteGenre.splice(index, 1)
+        genres.splice(deletedGenre, 1)
 
         sessionStorage.setItem('genres',
-        JSON.stringify(deleteGenre))
+        JSON.stringify(genres))
     }
 }
 
-//RUN
+//For run the app, uncomment this:
 export default logic
-//TEST
-// module.exports = logic
 
+//For run the test, uncomment this:
+// module.exports = logic
 
