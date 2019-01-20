@@ -1,68 +1,101 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Beezy Bookstore Test
 
-## Available Scripts
+### **INTRODUCTION**
 
-In the project directory, you can run:
+####  **The test.**
 
-### `npm start`
+This front-end test was developed applying the following technologies and methodologies:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
++ Javascript (ECMAScript2016)
++ ReactJS
++ React Router 
++ CSS
++ Sass
++ BEM
++ Chai
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+![alt text](https://davidmles.com/wp-content/uploads/2017/02/html-css-js-768x427.png "technologies")
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### **INSTRUCTIONS**
 
-### `npm run build`
+First, clone the repository:
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> https://github.com/vior1992/Beezy-test.git
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+#### **RUN THE APPLICATION**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For run, move to the bookstore folder:
 
-### `npm run eject`
+> $ cd bookstore
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Install the necessary dependencies:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> $ npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Finally, run the application:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> $ npm start
 
-## Learn More
+#### **RUN THE TEST**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+On the next folders:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
++ utilities
++ data
++ logic/index.js
 
-### Code Splitting
+You must switch the comment lines to unncoment, and the oposite.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Example on folder data/Book.js:
+```javascript
+//For run the app, uncomment this:
+// export default Book
 
-### Analyzing the Bundle Size
+//For run the test, uncomment this:
+module.exports = Book
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Finally, run the test:
 
-### Making a Progressive Web App
+> $ npm test
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+---
 
-### Advanced Configuration
+### **DOCUMENTATION**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+On the **landing**, the user can see the existen **books**, and is possible filter the books for **genre**.
 
-### Deployment
+The **Books** site is similar to landing, but you can **edit**, **delete** or **create** new book.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Like on Books site but without filter, on **Genres** site you can **edit**, **delete** or **create** new genre.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### **TECHNICAL DESCRIPTION**
+
+The application was built using ReactJS with create-react-app. 
+
+Styles was made using SASS and BEM methodology.
+
+#### **STRUCTURE**
+
++ bookstore
+    + public
+    + src
+        + components
+        + data
+        + logic
+        + utilities
+
+---
+
+### **LIVE DEMO**
+
+<!-- [Bookstore live demo](http: "Bookstore") -->
+
+---
+
+### **AUTHOR**
+Daniel Villegas Ortiz

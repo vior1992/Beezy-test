@@ -80,14 +80,13 @@ class NewBook extends Component {
                         value={this.state.title} 
                         type='text' 
                         maxlength='30' 
-                        placeholder='Introduce a title (Max. 22 characters)' 
+                        placeholder='Introduce a title (Max. 30 characters)' 
                         onChange={this.handleTitleChange}
                     />
                     <select 
                         value={this.state.genre}
                         className='newBook__select' 
                         name='tags' 
-                        id='' 
                         onChange={this.handleGenreChange}
                     >
                         <option selected disabled value=''>Select a genre</option>
@@ -97,8 +96,8 @@ class NewBook extends Component {
                     </select>
                     <input className='newBook__input'
                         value={this.state.price} 
-                        type='number' 
-                        maxlength="5"
+                        type='number'
+                        max='5'
                         placeholder='Introduce a price (Max. 5 characters)' 
                         onChange={this.handlePriceChange}
                     />

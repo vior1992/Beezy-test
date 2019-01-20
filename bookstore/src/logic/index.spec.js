@@ -4,24 +4,24 @@ const logic = require('.')
 
 
 describe('test logic', () => {
-    describe('retrieveBooks', () => {
+    false && describe('retrieveBooks', () => {
         it('should succed on correct data(retrieve all books)', async () => {
             const books = await logic.retrieveBooks()
 
             expect(books).to.be.an('array')
-            expect(books.length).to.be.equal(2)
-            expect(books[1].title).to.be.equal('javascript')
+            expect(books.length).to.be.equal(3)
+            expect(books[1].title).to.be.equal('The Brothers Karamazov')
         })
     })
 
-    describe('listBooksFiltered', () => {
+    false && describe('listBooksFiltered', () => {
         it('should succed on correct data(retrieve books filtered for genre)', async () => {
-            const genre = 'comedia'
+            const genre = 'novel'
             const books = await logic.listBooksFiltered(genre)
 
             expect(books).to.be.an('array')
             expect(books.length).to.be.equal(1)
-            expect(books[0].title).to.be.equal('javascript')
+            expect(books[0].title).to.be.equal('The Brothers Karamazov')
         })
 
         it('should succed on correct data(retrieve all books on default filter)', async () => {
@@ -29,8 +29,8 @@ describe('test logic', () => {
             const books = await logic.listBooksFiltered(genre)
 
             expect(books).to.be.an('array')
-            expect(books.length).to.be.equal(2)
-            expect(books[0].title).to.be.equal('crepusculo')
+            expect(books.length).to.be.equal(3)
+            expect(books[0].title).to.be.equal('Don Quixote')
         })
 
         it('should fail on wrong genre (undefined)', () => {
@@ -50,7 +50,7 @@ describe('test logic', () => {
         })
     })
 
-    describe('addBook', () => {
+    false && describe('addBook', () => {
         let title, genre, price, author
 
         beforeEach(() => {
@@ -60,14 +60,14 @@ describe('test logic', () => {
             author = 'Pablo Ibañez'
         })
 
-        it('should succed on correct data',() => {
-            logic.addBook(title, genre, price, author)
+        it('should succed on correct data', async () => {
+            await logic.addBook(title, genre, price, author)
 
-            const books = logic.retrieveBooks()
+            const books = await logic.retrieveBooks()
 
             expect(books).to.be.an('array')
-            expect(books.length).to.be.equal(3)
-            expect(books[2].title).to.be.equal('mortadelo')
+            expect(books.length).to.be.equal(4)
+            expect(books[3].title).to.be.equal('mortadelo')
         })
 
         //Title fail tests
@@ -139,96 +139,151 @@ describe('test logic', () => {
         })
     })
 
-    //ARREGLAR TEST
-    false && describe('editBook', () =>{
-        let title, genre, price, author
+    false && describe('editBookGenre', () =>{
+        let oldGenre, newGenre, books
 
-        beforeEach(() => {
+        beforeEach(async () => {
+            oldGenre = 'novel'
+            newGenre = 'fantasy'
+            books = await logic.retrieveBooks()
+        })
+
+        it('should succed on correct data', async () => {
+            await logic.editBookGenre(oldGenre, newGenre)
+
+            const _books = await logic.retrieveBooks()
+            
+            expect(_books[1]).to.be.an('object')
+            expect(books[1].title).to.be.equal(_books[1].title)
+            expect(books[1].genre).to.be.equal('novel')
+            expect(_books[1].genre).to.be.equal('fantasy')
+            expect(books[1].price).to.be.equal(_books[1].price)
+            expect(books[1].author).to.be.equal(_books[1].author)
+        })
+
+        //oldGenre fail tests
+        it('should fail on wrong oldGenre (undefined)', () => {
+            expect(() => logic.editBookGenre(undefined, newGenre)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong oldGenre (empty or blank)', () => {
+            expect(() => logic.editBookGenre('    ', newGenre)).to.throw(Error, 'oldGenre is empty or blank')
+        })
+
+        it('should fail on wrong oldGenre (number)', () => {
+            expect(() => logic.editBookGenre(2, newGenre)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong oldGenre (boolean)', () => {
+            expect(() => logic.editBookGenre(false, newGenre)).to.throw(Error, 'false is not a string')
+        })
+
+        //newGenre fail tests
+        it('should fail on wrong newGenre (undefined)', () => {
+            expect(() => logic.editBookGenre(oldGenre, undefined)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong newGenre (empty or blank)', () => {
+            expect(() => logic.editBookGenre(oldGenre, '    ')).to.throw(Error, 'newGenre is empty or blank')
+        })
+
+        it('should fail on wrong newGenre (number)', () => {
+            expect(() => logic.editBookGenre(oldGenre, 2)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong newGenre (boolean)', () => {
+            expect(() => logic.editBookGenre(oldGenre, false)).to.throw(Error, 'false is not a string')
+        })
+    })
+
+    false && describe('editBook', () =>{
+        let title, genre, price, author, books
+
+        beforeEach(async () => {
             title = 'luna llena'
             genre = 'novela romantica'
             price = '22'
             author = 'federico mercurio'
+            books = await logic.retrieveBooks()
         })
 
-        it('should succed on correct data', () => {
-            const book = logic.retrieveBooks()
+        it('should succed on correct data', async () => {
+            await logic.editBook(books[2].id, title, genre, price, author)
 
-            logic.editBook(book[0].id, title, genre, price, author)
+            const _books = await logic.retrieveBooks()
 
-            const books = logic.retrieveBooks()
-
-            expect(books[2]).to.be.an('object')
-            expect(books[2].title).to.be.equal('luna llena')
-            expect(books[2].price).to.be.equal('22')
-            expect(books[2].author).to.be.equal('federico mercurio')
+            expect(_books[2]).to.be.an('object')
+            expect(_books[2].title).to.be.equal('luna llena')
+            expect(_books[2].price).to.be.equal('22')
+            expect(_books[2].author).to.be.equal('federico mercurio')
         })
 
         //Id fail tests
         it('should fail on wrong id (undefined)', () => {
-            expect(() => logic.addBook(undefined, title, genre, price, author)).to.throw(TypeError, 'undefined is not a number')
+            expect(() => logic.editBook(undefined, title, genre, price, author)).to.throw(TypeError, 'undefined is not a number')
         })
 
         it('should fail on wrong id (empty or blank)', () => {
-            expect(() => logic.addBook('    ', title, genre, price, author)).to.throw(Error, 'id is empty or blank')
+            expect(() => logic.editBook('    ', title, genre, price, author)).to.throw(Error, 'id is empty or blank')
         })
 
         it('should fail on wrong id (string)', () => {
-            expect(() => logic.addBook('2', title, genre, price, author)).to.throw(Error, '2 is not a number')
+            expect(() => logic.editBook('2', title, genre, price, author)).to.throw(Error, '2 is not a number')
         })
 
         it('should fail on wrong id (boolean)', () => {
-            expect(() => logic.addBook(false, title, genre, price, author)).to.throw(Error, 'false is not a number')
+            expect(() => logic.editBook(false, title, genre, price, author)).to.throw(Error, 'false is not a number')
         })
 
         //Title fail tests
         it('should fail on wrong title (undefined)', () => {
-            expect(() => logic.addBook(this.book[0].id, undefined, genre, price, author)).to.throw(TypeError, 'undefined is not a string')
+            expect(() => logic.editBook(this.book[0].id, undefined, genre, price, author)).to.throw(TypeError, 'undefined is not a string')
         })
 
         it('should fail on wrong title (empty or blank)', () => {
-            expect(() => logic.addBook(this.book[0].id, '    ', genre, price, author)).to.throw(Error, 'title is empty or blank')
+            expect(() => logic.editBook(this.book[0].id, '    ', genre, price, author)).to.throw(Error, 'title is empty or blank')
         })
 
         it('should fail on wrong title (number)', () => {
-            expect(() => logic.addBook(this.book[0].id, 2, genre, price, author)).to.throw(Error, '2 is not a string')
+            expect(() => logic.editBook(this.book[0].id, 2, genre, price, author)).to.throw(Error, '2 is not a string')
         })
 
         it('should fail on wrong title (boolean)', () => {
-            expect(() => logic.addBook(this.book[0].id, false, genre, price, author)).to.throw(Error, 'false is not a string')
+            expect(() => logic.editBook(this.book[0].id, false, genre, price, author)).to.throw(Error, 'false is not a string')
         })
 
         //Genre fail tests
         it('should fail on wrong genre (undefined)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, undefined, price, author)).to.throw(TypeError, 'undefined is not a string')
+            expect(() => logic.editBook(this.book[0].id, title, undefined, price, author)).to.throw(TypeError, 'undefined is not a string')
         })
 
         it('should fail on wrong genre (empty or blank)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, '    ', price, author)).to.throw(Error, 'genre is empty or blank')
+            expect(() => logic.editBook(this.book[0].id, title, '    ', price, author)).to.throw(Error, 'genre is empty or blank')
         })
 
         it('should fail on wrong genre (number)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, 2, price, author)).to.throw(Error, '2 is not a string')
+            expect(() => logic.editBook(this.book[0].id, title, 2, price, author)).to.throw(Error, '2 is not a string')
         })
 
         it('should fail on wrong genre (boolean)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, false, price, author)).to.throw(Error, 'false is not a string')
+            expect(() => logic.editBook(this.book[0].id, title, false, price, author)).to.throw(Error, 'false is not a string')
         })
 
         //Price fail tests
         it('should fail on wrong price (undefined)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, genre, undefined, author)).to.throw(TypeError, 'undefined is not a string')
+            expect(() => logic.editBook(this.book[0].id, title, genre, undefined, author)).to.throw(TypeError, 'undefined is not a string')
         })
 
         it('should fail on wrong price (empty or blank)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, genre, '    ', author)).to.throw(Error, 'price is empty or blank')
+            expect(() => logic.editBook(this.book[0].id, title, genre, '    ', author)).to.throw(Error, 'price is empty or blank')
         })
 
         it('should fail on wrong price (number)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, genre, 2, author)).to.throw(Error, '2 is not a string')
+            expect(() => logic.editBook(this.book[0].id, title, genre, 2, author)).to.throw(Error, '2 is not a string')
         })
 
         it('should fail on wrong price (boolean)', () => {
-            expect(() => logic.addBook(this.book[0].id, title, genre, false, author)).to.throw(Error, 'false is not a string')
+            expect(() => logic.editBook(this.book[0].id, title, genre, false, author)).to.throw(Error, 'false is not a string')
         })
 
         //Author fail tests
@@ -248,4 +303,212 @@ describe('test logic', () => {
             expect(() => logic.addBook(this.book[0].id, title, genre, price, false)).to.throw(Error, 'false is not a string')
         })
     })
+
+    false && describe('deleteBook', () =>{
+        let books
+
+        beforeEach(async () => books = await logic.retrieveBooks())
+
+        it('should succed on correct data', async () => {
+            await logic.deleteBook(books[0].id)
+
+            const _books = await logic.retrieveBooks()
+
+            expect(_books[1]).to.be.an('object')
+            expect(_books.length).to.be.equal(2)
+            expect(books[0].title).to.be.equal('Don Quixote')
+            expect(books[0].author).to.be.equal('Miguel De Cervantes')
+            expect(_books[1].title).to.be.equal(books[2].title)
+            expect(_books[1].author).to.be.equal(books[2].author)
+        })
+        
+        //id fail tests
+        it('should fail on wrong id (undefined)', () => {
+            expect(() => logic.deleteBook(undefined)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong id (empty or blank)', () => {
+            expect(() => logic.deleteBook('    ')).to.throw(Error, 'id is empty or blank')
+        })
+
+        it('should fail on wrong id (number)', () => {
+            expect(() => logic.deleteBook(2)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong id (boolean)', () => {
+            expect(() => logic.deleteBook(false)).to.throw(Error, 'false is not a string')
+        })
+    })
+
+    false && describe('deleteBookForGenre', () =>{
+        let books, genre
+
+        beforeEach(async () => {
+            books = await logic.retrieveBooks()
+            genre = 'novel'
+        })
+
+        it('should succed on correct data', async () => {
+            await logic.deleteBookForGenre(genre)
+                
+            const _books = await logic.retrieveBooks()
+
+            expect(_books[1]).to.be.an('object')
+            expect(_books.length).to.be.equal(2)
+            expect(_books[1].title).to.be.equal('Javascript; The Good Parts')
+            expect(_books[1].author).to.be.equal('Douglas Crockford')
+            expect(_books[1].title).to.be.equal(books[2].title)
+            expect(_books[1].author).to.be.equal(books[2].author)
+        })
+
+        //Genre fail tests
+        it('should fail on wrong genre (undefined)', () => {
+            expect(() => logic.deleteBookForGenre(undefined)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong genre (empty or blank)', () => {
+            expect(() => logic.deleteBookForGenre('    ')).to.throw(Error, 'genre is empty or blank')
+        })
+
+        it('should fail on wrong genre (number)', () => {
+            expect(() => logic.deleteBookForGenre(2)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong genre (boolean)', () => {
+            expect(() => logic.deleteBookForGenre(false)).to.throw(Error, 'false is not a string')
+        })
+    })
+
+    false && describe('retrieveGenres', () => {
+        it('should succed on correct data(retrieve all genres)', async () => {
+            const genres = await logic.retrieveGenres()
+
+            expect(genres).to.be.an('array')
+            expect(genres.length).to.be.equal(3)
+            expect(genres[1].name).to.be.equal('fantasy')
+        })
+    })
+
+    false && describe('addGenre', () => {
+        let name
+
+        beforeEach(() => {
+            name = 'fear'
+        })
+
+        it('should succed on correct data', async () => {
+            await logic.addGenre(name)
+
+            const genres = await logic.retrieveGenres()
+
+            expect(genres).to.be.an('array')
+            expect(genres.length).to.be.equal(4)
+            expect(genres[3].name).to.be.equal('fear')
+        })
+
+        //Name fail tests
+        it('should fail on wrong name (undefined)', () => {
+            expect(() => logic.addGenre(undefined)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong name (empty or blank)', () => {
+            expect(() => logic.addGenre('    ')).to.throw(Error, 'name is empty or blank')
+        })
+
+        it('should fail on wrong name (number)', () => {
+            expect(() => logic.addGenre(2)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong name (boolean)', () => {
+            expect(() => logic.addGenre(false)).to.throw(Error, 'false is not a string')
+        })
+    })
+
+    false && describe('editgenre', () =>{
+        let name, genres
+
+        beforeEach(async () => {
+            name = 'fear'
+            genres = await logic.retrieveGenres()
+        })
+
+        it('should succed on correct data', async () => {
+            await logic.editGenre(genres[2].id, name)
+
+            const _genres = await logic.retrieveGenres()
+
+            expect(_genres[2]).to.be.an('object')
+            expect(_genres[2].name).to.be.equal('fear')
+        })
+
+        //Id fail tests
+        it('should fail on wrong id (undefined)', () => {
+            expect(() => logic.editGenre(undefined, name)).to.throw(TypeError, 'undefined is not a number')
+        })
+
+        it('should fail on wrong id (empty or blank)', () => {
+            expect(() => logic.editGenre('    ', name)).to.throw(Error, 'id is empty or blank')
+        })
+
+        it('should fail on wrong id (string)', () => {
+            expect(() => logic.editGenre('2', name)).to.throw(Error, '2 is not a number')
+        })
+
+        it('should fail on wrong id (boolean)', () => {
+            expect(() => logic.editGenre(false, name)).to.throw(Error, 'false is not a number')
+        })
+
+        //name fail tests
+        it('should fail on wrong name (undefined)', () => {
+            expect(() => logic.editGenre(this.genre[0].id, undefined)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong name (empty or blank)', () => {
+            expect(() => logic.editGenre(this.genre[0].id, '    ')).to.throw(Error, 'name is empty or blank')
+        })
+
+        it('should fail on wrong name (number)', () => {
+            expect(() => logic.editGenre(this.genre[0].id, 2)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong name (boolean)', () => {
+            expect(() => logic.editGenre(this.genre[0].id, false)).to.throw(Error, 'false is not a string')
+        })
+    })
+
+    describe('deleteGenre', () =>{
+        let genres
+
+        beforeEach(async () => genres = await logic.retrieveGenres())
+
+        it('should succed on correct data', async () => {
+            await logic.deleteGenre(genres[0].id)
+
+            const _genres = await logic.retrieveGenres()
+
+            expect(_genres[1]).to.be.an('object')
+            expect(_genres.length).to.be.equal(2)
+            expect(genres[0].name).to.be.equal('novel')
+            expect(_genres[0].name).to.be.equal('fantasy')
+            expect(_genres[1].name).to.be.equal(genres[2].name)
+        })
+        
+        //id fail tests
+        it('should fail on wrong id (undefined)', () => {
+            expect(() => logic.deleteGenre(undefined)).to.throw(TypeError, 'undefined is not a string')
+        })
+
+        it('should fail on wrong id (empty or blank)', () => {
+            expect(() => logic.deleteGenre('    ')).to.throw(Error, 'id is empty or blank')
+        })
+
+        it('should fail on wrong id (number)', () => {
+            expect(() => logic.deleteGenre(2)).to.throw(Error, '2 is not a string')
+        })
+
+        it('should fail on wrong id (boolean)', () => {
+            expect(() => logic.deleteGenre(false)).to.throw(Error, 'false is not a string')
+        })
+    })
 })
+

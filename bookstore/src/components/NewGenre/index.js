@@ -5,23 +5,23 @@ import logic from '../../logic'
 import './styles.css'
 
 class NewGenre extends Component {
-    state = { error: null, addGenre: '', added: false }
+    state = { error: null, name: '', added: false }
 
-    handleAddGenreChange = event => {
+    handleNameChange = event => {
         this.setState({ error: null, added: false })
 
-        const addGenre = event.target.value.toLowerCase()
+        const name = event.target.value.toLowerCase()
 
-        this.setState({ addGenre })
+        this.setState({ name })
     }
 
     handleSubmit = async event => {
         event.preventDefault()
         
         try {
-            await logic.addGenre(this.state.addGenre)
+            await logic.addGenre(this.state.name)
 
-            this.setState({ added: true, addGenre: '' })
+            this.setState({ added: true, name: '' })
         } catch (err) {
             this.setState({ error: err.message })
         }
@@ -34,11 +34,11 @@ class NewGenre extends Component {
                 <h2>Add a genre:</h2>
                 <form className='newGenre__container' onSubmit={this.handleSubmit}>
                     <input className='newGenre__input' 
-                        value={this.state.addGenre} 
+                        value={this.state.name} 
                         type='text' 
                         maxlength='22' 
                         placeholder='Introduce a name (Max. 22 characters)' 
-                        onChange={this.handleAddGenreChange}
+                        onChange={this.handleNameChange}
                     />
                     <div>
                         <button className='buttons__new' type='submit'>New genre</button>

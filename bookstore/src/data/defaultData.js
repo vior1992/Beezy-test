@@ -18,7 +18,7 @@ const defaultData = {
 
         { 
             id: Date.now()+Math.floor(Math.random() * 100) + 1,
-            title: 'Javascript: The Good Parts',
+            title: 'Javascript; The Good Parts',
             genre: 'tecnologies',
             price: '20.99',
             author: 'Douglas Crockford'
