@@ -117,9 +117,22 @@ const logic = {
         await bookStorage.set(books)
     },
 
-    //COMMENTS
+    /**
+     * 
+     * @param {String} oldGenre -> The oldGenre of the book.
+     * @param {String} newGenre -> The newGenre of the book.
+     * 
+     * @throws {TypeError} -> On not string data.
+     * @throws {Error} -> On empty or blank data.
+     * @throws {TypeError} -> On not boolean data.
+     * @throws {TypeError} -> On not number data.
+     * 
+     */
     async editBookGenre(oldGenre, newGenre) {
-        //validate
+        validateLogic([
+            { key: 'oldGenre', value: oldGenre, type: String },
+            { key: 'newGenre', value: newGenre, type: String }
+        ])
 
         const books = await logic.listBooksFiltered(oldGenre)
 
@@ -232,7 +245,7 @@ const logic = {
         const genres = await logic.retrieveGenres()
 
         genres.forEach(genre => { 
-            if (genre.name === name) throw Error (`add genre genre '${name}' already exists`)
+            if (genre.name === name) throw Error (`Genre '${name}' already exists`)
         })
 
         const genre = new Genre({ name })
@@ -243,6 +256,7 @@ const logic = {
     },
 
     /**
+     * 
      * @param {Number} id -> The id of the genre.
      * @param {String} name -> The name of the genre.
      * 
@@ -261,7 +275,7 @@ const logic = {
         const genres = await logic.retrieveGenres()
 
         genres.forEach(genre => { 
-            if (genre.name === name) throw Error (`edit genre '${name}' already exists`)
+            if (genre.name === name) throw Error (`Genre '${name}' already exists`)
         })
         
         const index = genres.findIndex(genre => genre.id === id)

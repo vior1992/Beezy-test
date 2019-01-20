@@ -69,14 +69,14 @@ class NewBook extends Component {
     render() {
         return <div>
             <Navbar/>
-            <div className='newBookSite__container'>
+            <div className='newBook'>
                 <h2>Create book:</h2>
                 {this.state.loaded && this.state.genres.length === 0 
-                    ? <h1 className='error'>No genres, create a genre first</h1> 
+                    ? <h1 className='newBook__error'>No genres, create a genre first</h1> 
                     : ""
                 }
-                <form className='container__formulary' onSubmit={this.handleSubmit}>
-                    <input className='formulary__input'
+                <form className='newBook__container' onSubmit={this.handleSubmit}>
+                    <input className='newBook__input'
                         value={this.state.title} 
                         type='text' 
                         maxlength='30' 
@@ -85,7 +85,7 @@ class NewBook extends Component {
                     />
                     <select 
                         value={this.state.genre}
-                        className='formulary__selector' 
+                        className='newBook__select' 
                         name='tags' 
                         id='' 
                         onChange={this.handleGenreChange}
@@ -95,29 +95,29 @@ class NewBook extends Component {
                             <option value={genre.name}>{genre.name}</option>
                         )}
                     </select>
-                    <input className='formulary__input'
+                    <input className='newBook__input'
                         value={this.state.price} 
                         type='number' 
                         maxlength="5"
                         placeholder='Introduce a price (Max. 5 characters)' 
                         onChange={this.handlePriceChange}
                     />
-                    <input className='formulary__input'
+                    <input className='newBook__input'
                         value={this.state.author} 
                         type='text' 
                         maxlength='22' 
                         placeholder='Introduce a author (Max. 22 characters)' 
                         onChange={this.handleAuthorChange}
                     />
-                    <div className='button__container'>
-                        <button className='button' type='submit'>New Book</button>
+                    <div>
+                        <button className='buttons__new' type='submit'>New Book</button>
                         <Link to='/books'>
-                            <button className='button'>Back</button>
+                            <button className='buttons__back'>Back</button>
                         </Link>
                     </div>
                     {this.state.added && !this.state.error 
-                        ? <h1 className='message'>Book created succesfully</h1> 
-                        : <h1 className='error'>{this.state.error}</h1>
+                        ? <h1 className='newBook__message'>Book created succesfully</h1> 
+                        : <h1 className='newBook__error'>{this.state.error}</h1>
                     }
                 </form>
             </div>

@@ -29,16 +29,16 @@ class Landing extends Component {
         return <div>
             <Navbar/>
             <div className='landing__container'>
-                <div className='container__filter'>
+                <div className='landing__select'>
                     <h2>Filter for genre:</h2>
-                    <select className='filter__selector' name='tags' id='' onChange={this.handleFilterChange}>
+                    <select className='select' name='tags' id='' onChange={this.handleFilterChange}>
                         <option selected value='default'>All books</option>
                         {this.state.genres.length ? this.state.genres.map(genre => 
                             <option value={genre.name}>{genre.name}</option>
                         ) : ''}
                     </select>
                 </div>
-                <div className='container__booklist'>
+                <div className='landing__booklist'>
                     {this.state.genres.length ? this.state.books.map(book => <Book 
                         {...book}
                         viewMode={true}

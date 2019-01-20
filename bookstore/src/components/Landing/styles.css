@@ -9,9 +9,12 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #f0fcff; }
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+  word-break: break-all; }
 
-.container__filter {
+.landing__select {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -19,8 +22,9 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -ms-flex-line-pack: center;
-      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-color: #fff;
   width: 200px;
   margin: 10px;
@@ -29,11 +33,19 @@
   -webkit-box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1); }
 
-.container__booklist {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row; }
+.select {
+  width: 215px;
+  height: 30px;
+  margin: 0;
+  padding: 5px;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15); }
+
+.landing__booklist {
+  width: 100%;
+  margin-top: 1rem; }

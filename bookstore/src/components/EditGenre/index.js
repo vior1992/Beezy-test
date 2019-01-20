@@ -36,20 +36,22 @@ class EditGenre extends Component {
 
     render() {
         return <div>
-            <form className='editGenre__container'onSubmit={this.handleSubmit}>
-                <input className='container__input' 
-                    value={this.state.name} 
-                    type='text' 
-                    maxlength='18' 
-                    placeholder='Introduce a name (Max. 18 characters)' 
-                    onChange={this.handleNameChange}
-                />
-                {this.state.error ? <h1 className='error'>{this.state.error}</h1> : ''}
-                <div className='container__buttons'>
-                    <button className='buttons' type='submit'>Save changes</button>
-                    <button className='buttons' onClick={() => this.props.onEndEditMode()}>Cancel</button>
-                </div>
-            </form> 
+            <div className='editGenre'>
+                <form className='editGenre__container'onSubmit={this.handleSubmit}>
+                    <input className='editGenre__input' 
+                        value={this.state.name} 
+                        type='text' 
+                        maxlength='18' 
+                        placeholder='Introduce a name (Max. 18 characters)' 
+                        onChange={this.handleNameChange}
+                    />
+                    {this.state.error ? <h1 className='editGenre__error'>{this.state.error}</h1> : ''}
+                    <div>
+                        <button className='buttons__edit' type='submit'>Save</button>
+                        <button className='buttons__cancel' onClick={() => this.props.onEndEditMode()}>Cancel</button>
+                    </div>
+                </form> 
+            </div>
         </div>
     }
 }

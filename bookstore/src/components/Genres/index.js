@@ -19,11 +19,11 @@ class Genres extends Component {
     render() {
         return <div>
             <Navbar/>
-            <div className='genresSite__container'>
+            <div className='genres__container'>
                 <Link to='/genres/new'>
-                    <button className="container__button" type="button">New genre</button>
+                    <button className='options__newGenreButton' type='button'>New Genre</button>
                 </Link>
-                <div className='container__genrelist'>
+                <div className='genres__genrelist'>
                     {this.state.genres.map(genre => <Genre 
                         {...genre}
                         onEditOrDelete={this.handleRefresh} 

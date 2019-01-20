@@ -1,18 +1,32 @@
+$color-secondary: #fff
+$color-edit: #2da94f
+$color-delete: #c80000
+
+.genre
+    width: 100%
+    background-color: $color-secondary
+    border-radius: 5px
+    box-shadow: 0 4px 25px rgba(0,0,0,.15)
+    margin-bottom: 1rem
+
 .genre__container
-    display: flex
-    flex-direction: column
-    align-content: center
-    background-color: #fff
-    width: 200px
-    margin: 10px
-    padding: 0px 30px 20px 30px
-    border-radius: 10px
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .1)
+    padding: 20px
 
-.container__buttons
-    border-top: 2px solid black
+.genre__name
+    margin: 0
+    text-transform: capitalize
+    margin-bottom: .5rem
 
-.buttons
+.buttons__delete, .buttons__edit
     width: 100px
     height: 30px
+    border-radius: 4px
     border: none
+    margin-right: 1rem
+    color: $color-secondary
+    cursor: pointer
+    font-size: 14px
+    &.buttons__delete
+        background-color: $color-delete
+    &.buttons__edit
+        background-color: $color-edit

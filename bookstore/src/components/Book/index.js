@@ -39,7 +39,7 @@ class Book extends Component {
                             <h2 className='book__author'>Author: {this.props.author}</h2>
                             <h2 className='book__price'>Price: {this.props.price}€</h2>
                         </div>
-                        <div className='book__buttons'>
+                        <div>
                             <button className='buttons__edit' onClick={() => this.setState({ editMode: true })}>Edit</button>
                             <button className='buttons__delete' onClick={this.handleDeleteClick}>Delete</button>
                         </div>

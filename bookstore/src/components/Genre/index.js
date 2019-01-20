@@ -24,13 +24,15 @@ class Genre extends Component {
         return <div>
             {this.state.editMode === false 
             ?
-                <div className="genre__container">
-                    <div>
-                        <h1>{this.props.name}</h1>
-                    </div>
-                    <div className="container__buttons">
-                        <button className='buttons' onClick={() => this.setState({ editMode: true })}>Edit</button>
-                        <button className='buttons' onClick={this.handleDeleteClick}>Delete</button>
+                <div className='genre'>
+                    <div className='genre__container'>
+                        <div>
+                            <h1 className='genre__name'>{this.props.name}</h1>
+                        </div>
+                        <div>
+                            <button className='buttons__edit' onClick={() => this.setState({ editMode: true })}>Edit</button>
+                            <button className='buttons__delete' onClick={this.handleDeleteClick}>Delete</button>
+                        </div>
                     </div>
                 </div>
             :

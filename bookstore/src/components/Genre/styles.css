@@ -1,20 +1,29 @@
-.genre__container {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
+.genre {
+  width: 100%;
   background-color: #fff;
-  width: 200px;
-  margin: 10px;
-  padding: 0px 30px 20px 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1); }
+  border-radius: 5px;
+  -webkit-box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1rem; }
 
-.container__buttons {
-  border-top: 2px solid black; }
+.genre__container {
+  padding: 20px; }
 
-.buttons {
+.genre__name {
+  margin: 0;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem; }
+
+.buttons__delete, .buttons__edit {
   width: 100px;
   height: 30px;
-  border: none; }
-
-/*# sourceMappingURL=styles.css.map */
+  border-radius: 4px;
+  border: none;
+  margin-right: 1rem;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px; }
+  .buttons__delete.buttons__delete, .buttons__edit.buttons__delete {
+    background-color: #c80000; }
+  .buttons__delete.buttons__edit, .buttons__edit.buttons__edit {
+    background-color: #2da94f; }

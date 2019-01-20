@@ -1,28 +1,39 @@
-//BUscar otros colores 
 $color-primary: #0090c6
-$color-danger: #c3352e
-$color-secondary: #888
-$color-background: #f0fcff
-$color-text: #fff
-$padding: 0px 40px
-    
+$color-secondary: #fff
+$color-background: #F1f1f1
+
 .landing__container
     display: flex
     flex-direction: column
     align-items: center
-    background-color: $color-background
+    max-width: 600px
+    margin: 0 auto
+    padding: 15px
+    word-break: break-all
 
-.container__filter
+.landing__select
     display: flex
     flex-direction: column
-    align-content: center
-    background-color: #fff
+    align-items: center
+    background-color: $color-secondary
     width: 200px
     margin: 10px
     padding: 0px 30px 20px 30px
     border-radius: 10px
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .1)
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1)
+
+.select 
+    width: 215px
+    height: 30px
+    margin: 0
+    padding: 5px
+    text-transform: capitalize
+    margin-bottom: .5rem
+    font-size: 12px
+    border: none
+    border-radius: 5px
+    box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15)
     
-.container__booklist
-    display: flex
-    flex-direction: row
+.landing__booklist
+    width: 100%
+    margin-top: 1rem

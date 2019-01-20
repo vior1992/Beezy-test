@@ -3,7 +3,7 @@ $color-new: #2da94f
 $color-back: #fdbd00
 $color-error: #c3352e
 
-.newBook
+.newGenre
     display: flex
     align-items: center
     text-align: center
@@ -15,13 +15,13 @@ $color-error: #c3352e
     box-shadow: 0 4px 25px rgba(0,0,0,.15)
     margin-bottom: 1rem
 
-.newBook__container
+.newGenre__container
     display: flex
     align-content: center
     flex-direction: column
     padding: 20px
 
-.newBook__input, .newBook__select
+.newGenre__input
     height: 30px
     width: 220px
     margin: 0
@@ -32,8 +32,6 @@ $color-error: #c3352e
     border: none
     border-radius: 5px
     box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.15)
-    &.newBook__select
-        width: 230px
 
 .buttons__new, .buttons__back
     width: 110px
@@ -50,12 +48,12 @@ $color-error: #c3352e
     &.buttons__back
         background-color: $color-back
 
-.newBook__error, .newBook__message
+.newGenre__error, .newGenre__message
     font-size: 16px
     font-weight: bold
     padding: 5px 0px
-    &.newBook__error
+    &.newGenre__error
         color: $color-error
-    &.newBook__message
+    &.newGenre__message
         color: $color-new
 
