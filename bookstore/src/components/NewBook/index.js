@@ -98,14 +98,14 @@ class NewBook extends Component {
                         value={this.state.price} 
                         type='number'
                         max='999'
-                        placeholder='Introduce a price (Max. 5 characters)' 
+                        placeholder='Introduce a price (Max. 3 characters)' 
                         onChange={this.handlePriceChange}
                     />
                     <input className='newBook__input'
                         value={this.state.author} 
                         type='text' 
-                        maxlength='22' 
-                        placeholder='Introduce a author (Max. 22 characters)' 
+                        maxlength='30' 
+                        placeholder='Introduce a author (Max. 30 characters)' 
                         onChange={this.handleAuthorChange}
                     />
                     <div>

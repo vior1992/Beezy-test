@@ -36,8 +36,8 @@ class NewGenre extends Component {
                     <input className='newGenre__input' 
                         value={this.state.name} 
                         type='text' 
-                        maxlength='22' 
-                        placeholder='Introduce a name (Max. 22 characters)' 
+                        maxlength='30' 
+                        placeholder='Introduce a name (Max. 30 characters)' 
                         onChange={this.handleNameChange}
                     />
                     <div>

@@ -101,7 +101,7 @@ class EditBook extends Component {
                         value={this.state.price} 
                         type='number' 
                         max='999'
-                        placeholder='Introduce a price (Max. 5 characters)' 
+                        placeholder='Introduce a price (Max. 3 characters)' 
                         onChange={this.handleEditBookPrice}
                     />
                     {this.state.error ? <h1 className='editBook__error'>{this.state.error}</h1> : ''}

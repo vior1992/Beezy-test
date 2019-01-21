@@ -1,169 +1,132 @@
 //For run the app, uncomment this:
-import validateLogic from '../utilities/validate'
-import Data from '../data'
+import validateLogic from "../utilities/validate"
+import Data from "../data"
+import api from '../api'
 
 //For run the test, uncomment this:
-// const validateLogic = require('../utilities/validate')
-// const Data = require('../data')
+// const validateLogic = require("../utilities/validate")
+// const Data = require("../data")
+// const api = require("../api")
 
-const { Book, Genre, defaultData } = Data
-
-const genreStorage = {
-    _key: 'genre',
-    _storage: sessionStorage,
-
-    get: async () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(JSON.parse(genreStorage._storage.getItem(genreStorage._key)))
-            }, Math.floor(Math.random() * 300) + 50)
-        })
-    },
-
-    set: async genres => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(genreStorage._storage.setItem(genreStorage._key, JSON.stringify(genres)))
-            }, Math.floor(Math.random() * 300) + 50)
-        })
-    }
-}
-
-const bookStorage = {
-    _key: 'books',
-    _storage: sessionStorage,
-
-    get: async () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(JSON.parse(bookStorage._storage.getItem(bookStorage._key)))
-            }, Math.floor(Math.random() * 300) + 50)
-        })
-    },
-
-    set: async books => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(bookStorage._storage.setItem(bookStorage._key, JSON.stringify(books)))
-            }, Math.floor(Math.random() * 300) + 50)
-        })
-    }
-}
-
-const { books, genres } = defaultData
-
-bookStorage.set(books)
-genreStorage.set(genres)
+const { Book, Genre } = Data
 
 const logic = {
-    /**
-     * 
-     * @returns {Promise.<Array>} -> The books array.
-     */ 
-    retrieveBooks: async () => await bookStorage.get(),
+  /**
+   *
+   * @returns {Promise.<Array>} -> The books array.
+   */
+  retrieveBooks: async () => await api.bookStorage.get(),
 
-    /**
-     * 
-     * @param {String} genre -> The name of the genre.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     * @returns {return} -> The books array with filtered books.
-     */
-    async listBooksFiltered(genre) {
-        validateLogic([{ key: 'genre', value: genre, type: String }])
+  /**
+   *
+   * @param {String} genre -> The name of the genre.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   * @returns {return} -> The books array with filtered books.
+   */
+  listBooksFiltered(genre) {
+    validateLogic([{ key: "genre", value: genre, type: String }])
 
+    return (async () => {
         const books = await logic.retrieveBooks()
 
-        if (genre === 'default') return books
-        
+        if (genre === "default") return books
+
         return books.filter(book => book.genre === genre)
-    },
+    })()
+  },
 
-     /**
-     * 
-     * @param {String} title -> The title of the book.
-     * @param {String} genre -> The genre of the book.
-     * @param {String} price -> The price of the book.
-     * @param {String} author -> The author of the book.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async addBook(title, genre, price, author){
-        validateLogic([
-            { key: 'title', value: title, type: String },
-            { key: 'genre', value: genre, type: String },
-            { key: 'price', value: price, type: String },
-            { key: 'author', value: author, type: String }
-        ])
+  /**
+   *
+   * @param {String} title -> The title of the book.
+   * @param {String} genre -> The genre of the book.
+   * @param {String} price -> The price of the book.
+   * @param {String} author -> The author of the book.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  addBook(title, genre, price, author) {
+    validateLogic([
+      { key: "title", value: title, type: String },
+      { key: "genre", value: genre, type: String },
+      { key: "price", value: price, type: String },
+      { key: "author", value: author, type: String }
+    ])
 
+    return (async () => {
         const books = await logic.retrieveBooks()
 
-        books.forEach(book => { 
-            if (book.title === title) throw Error(`Book ${title} already exist`)
+        books.forEach(book => {
+        if (book.title === title) throw Error(`Book ${title} already exist`)
         })
 
         const book = new Book({ title, genre, price, author })
 
         books.push(book)
 
-        await bookStorage.set(books)
-    },
+        await api.bookStorage.set(books)
+    })()
+  },
 
-    /**
-     * 
-     * @param {String} oldGenre -> The oldGenre of the book.
-     * @param {String} newGenre -> The newGenre of the book.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async editBookGenre(oldGenre, newGenre) {
-        validateLogic([
-            { key: 'oldGenre', value: oldGenre, type: String },
-            { key: 'newGenre', value: newGenre, type: String }
-        ])
+  /**
+   *
+   * @param {String} oldGenre -> The oldGenre of the book.
+   * @param {String} newGenre -> The newGenre of the book.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+editBookGenre(oldGenre, newGenre) {
+    validateLogic([
+      { key: "oldGenre", value: oldGenre, type: String },
+      { key: "newGenre", value: newGenre, type: String }
+    ])
 
+    return (async () => {
         const books = await logic.listBooksFiltered(oldGenre)
 
         books.forEach(async book => {
-            const { id, title, price, author } = book
-            await logic.editBook(id, title, newGenre, price, author)
+        const { id, title, price, author } = book
+        await logic.editBook(id, title, newGenre, price, author)
         })
-    },
+    })
+  },
 
-    /**
-     * 
-     * @param {Number} id -> The id of the book.
-     * @param {String} title -> The title of the book.
-     * @param {String} genre -> The genre of the book.
-     * @param {String} price -> The price of the book.
-     * @param {String} author -> The author of the book.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async editBook(id, title, genre, price, author){
-        validateLogic([
-            { key: 'id', value: id, type: Number },
-            { key: 'title', value: title, type: String },
-            { key: 'genre', value: genre, type: String },
-            { key: 'price', value: price, type: String },
-            { key: 'author', value: author, type: String }
-        ])
+  /**
+   *
+   * @param {Number} id -> The id of the book.
+   * @param {String} title -> The title of the book.
+   * @param {String} genre -> The genre of the book.
+   * @param {String} price -> The price of the book.
+   * @param {String} author -> The author of the book.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  editBook(id, title, genre, price, author) {
+    validateLogic([
+      { key: "id", value: id, type: Number },
+      { key: "title", value: title, type: String },
+      { key: "genre", value: genre, type: String },
+      { key: "price", value: price, type: String },
+      { key: "author", value: author, type: String }
+    ])
+
+    return (async () => {
         const books = await logic.retrieveBooks()
 
         const index = books.findIndex(book => book.id === id)
@@ -174,110 +137,118 @@ const logic = {
         bookEdited.genre = genre
         bookEdited.price = price
         bookEdited.author = author
-        
+
         books[index] = bookEdited
 
-        await bookStorage.set(books)
-    },
+        await api.bookStorage.set(books)
+    })()
+  },
 
-    /**
-     * 
-     * @param {Number} id -> The id of the book.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async deleteBook(id){
-        validateLogic([{ key: 'id', value: id, type: Number }])
-       
+  /**
+   *
+   * @param {Number} id -> The id of the book.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  deleteBook(id) {
+    validateLogic([{ key: "id", value: id, type: Number }])
+
+    return (async () => {
         const books = await logic.retrieveBooks()
 
         const deletedBook = books.findIndex(book => book.id === id)
-        
+
         books.splice(deletedBook, 1)
 
-        await bookStorage.set(books)
-    },
+        await api.bookStorage.set(books)
+    })()
+  },
 
-    /**
-     * 
-     * @param {String} name -> The name of the genre.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async deleteBookForGenre(name){
-        validateLogic([{ key: 'name', value: name, type: String }])
-       
+  /**
+   *
+   * @param {String} name -> The name of the genre.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  deleteBookForGenre(name) {
+    validateLogic([{ key: "name", value: name, type: String }])
+
+    return (async () => {
         const books = await logic.retrieveBooks()
 
-        const booksWithOutFilteredGenre = books
-            .filter(book => book.genre !== name)
+        const booksWithOutFilteredGenre = books.filter(book => book.genre !== name)
 
-        await bookStorage.set(booksWithOutFilteredGenre)
-    },
+        await api.bookStorage.set(booksWithOutFilteredGenre)
+    })()
+  },
 
-    /**
-     * 
-     * @returns {Promise.<Array>} -> The genres array.
-     */ 
-    retrieveGenres: async () => await genreStorage.get(),
+  /**
+   *
+   * @returns {Promise.<Array>} -> The genres array.
+   */
 
-    /**
-     * 
-     * @param {String} name -> The name of the genre.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async addGenre(name){
-        validateLogic([{ key: 'name', value: name, type: String }])
+  retrieveGenres: () => api.genreStorage.get(),
 
+  /**
+   *
+   * @param {String} name -> The name of the genre.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  addGenre(name) {
+    validateLogic([{ key: "name", value: name, type: String }])
+
+    return (async () => {
         const genres = await logic.retrieveGenres()
 
-        genres.forEach(genre => { 
-            if (genre.name === name) throw Error (`Genre '${name}' already exists`)
+        genres.forEach(genre => {
+        if (genre.name === name) throw Error(`Genre '${name}' already exists`)
         })
 
         const genre = new Genre({ name })
 
         genres.push(genre)
-        
-        await genreStorage.set(genres)
-    },
 
-    /**
-     * 
-     * @param {Number} id -> The id of the genre.
-     * @param {String} name -> The name of the genre.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async editGenre(id, name){
-        validateLogic([
-            { key: 'id', value: id, type: Number },
-            { key: 'name', value: name, type: String }
-        ])
+        await api.genreStorage.set(genres)
+    })()
+  },
 
+  /**
+   *
+   * @param {Number} id -> The id of the genre.
+   * @param {String} name -> The name of the genre.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  editGenre(id, name) {
+    validateLogic([
+      { key: "id", value: id, type: Number },
+      { key: "name", value: name, type: String }
+    ])
+
+    return (async () => {
         const genres = await logic.retrieveGenres()
 
-        genres.forEach(genre => { 
-            if (genre.name === name) throw Error (`Genre '${name}' already exists`)
+        genres.forEach(genre => {
+        if (genre.name === name) throw Error(`Genre '${name}' already exists`)
         })
-        
+
         const index = genres.findIndex(genre => genre.id === id)
 
         const genreEdited = genres[index]
@@ -285,35 +256,38 @@ const logic = {
         const { name: oldName } = genreEdited
 
         genreEdited.name = name
-        
+
         genres[index] = genreEdited
-        
-        await genreStorage.set(genres)
+
+        await api.genreStorage.set(genres)
 
         await logic.editBookGenre(oldName, name)
-    },
+    })()
+  },
 
-    /**
-     * 
-     * @param {Number} id -> The id of the genre.
-     * 
-     * @throws {TypeError} -> On not string data.
-     * @throws {Error} -> On empty or blank data.
-     * @throws {TypeError} -> On not boolean data.
-     * @throws {TypeError} -> On not number data.
-     * 
-     */
-    async deleteGenre(id){
-        validateLogic([{ key: 'id', value: id, type: Number }])
-       
-        const genres = await logic.retrieveGenres()
+  /**
+   *
+   * @param {Number} id -> The id of the genre.
+   *
+   * @throws {TypeError} -> On not string data.
+   * @throws {Error} -> On empty or blank data.
+   * @throws {TypeError} -> On not boolean data.
+   * @throws {TypeError} -> On not number data.
+   *
+   */
+  deleteGenre(id) {
+    validateLogic([{ key: "id", value: id, type: Number }])
 
-        const deletedGenre = genres.findIndex(genre => genre.id === id)
-        
-        genres.splice(deletedGenre, 1)
+    return (async () => {
+      const genres = await logic.retrieveGenres()
 
-        await genreStorage.set(genres)
-    }
+      const deletedGenre = genres.findIndex(genre => genre.id === id)
+
+      genres.splice(deletedGenre, 1)
+
+      await api.genreStorage.set(genres)
+    })()
+  }
 }
 
 //For run the app, uncomment this:

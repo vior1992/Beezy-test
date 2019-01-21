@@ -42,9 +42,10 @@ Finally, run the application:
 
 On the next folders:
 
-+ utilities
++ api
 + data
 + logic/index.js
++ utilities
 
 You must switch the comment lines to unncoment, and the oposite.
 
@@ -75,9 +76,9 @@ Like on Books site but without filter, on **Genres** site you can **edit**, **de
 
 ### **TECHNICAL DESCRIPTION**
 
-The application was built using ReactJS with create-react-app. 
+The application was built using ReactJS with create-react-app, and tested with chai. 
 
-Styles was made using SASS and BEM methodology.
+Styles was made using SASS and BEM.
 
 #### **STRUCTURE**
 

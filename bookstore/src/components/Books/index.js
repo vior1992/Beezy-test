@@ -33,9 +33,9 @@ class Books extends Component {
                         <h2>Filter for genre:</h2>
                         <select className='select' onChange={this.handleFilterChange}>
                             <option selected value='default'>All books</option>
-                            {this.state.genres.length ? this.state.genres.map(genre => 
+                            {(this.state.genres || []).map(genre => 
                                 <option value={genre.name}>{genre.name}</option>
-                            ) : ''}
+                            )}
                         </select>
                     </div>
                     <Link to='/books/new'> 
@@ -43,7 +43,7 @@ class Books extends Component {
                     </Link> 
                 </div>
                 <div className='books__booklist'>
-                    {this.state.books.map(book => <Book 
+                    {(this.state.books || []).map(book => <Book 
                         {...book}
                         genres={this.state.genres}
                         viewMode={false}

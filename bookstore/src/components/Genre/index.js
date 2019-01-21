@@ -12,11 +12,11 @@ class Genre extends Component {
         this.props.onEditOrDelete()
     }
 
-    handleDeleteClick = async () => {            
-        await logic.deleteGenre(this.props.id)
-
+    handleDeleteClick = async () => { 
         await logic.deleteBookForGenre(this.props.name)
-
+        
+        await logic.deleteGenre(this.props.id)
+        
         this.props.onEditOrDelete()
     }
 

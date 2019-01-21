@@ -41,8 +41,8 @@ class EditGenre extends Component {
                     <input className='editGenre__input' 
                         value={this.state.name} 
                         type='text' 
-                        maxlength='18' 
-                        placeholder='Introduce a name (Max. 18 characters)' 
+                        maxlength='30' 
+                        placeholder='Introduce a name (Max. 30 characters)' 
                         onChange={this.handleNameChange}
                     />
                     {this.state.error ? <h1 className='editGenre__error'>{this.state.error}</h1> : ''}

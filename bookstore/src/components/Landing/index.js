@@ -8,13 +8,11 @@ class Landing extends Component {
     state = { books: [], genres: [] }
 
     async componentDidMount() {
-        const books = await logic.retrieveBooks()
-
-        this.setState({ books })
-
         const genres = await logic.retrieveGenres()
 
-        this.setState({ genres })     
+        const books = await logic.retrieveBooks()
+
+        this.setState({ genres, books })    
     }
 
     handleFilterChange = async event => {
@@ -33,17 +31,16 @@ class Landing extends Component {
                     <h2>Filter for genre:</h2>
                     <select className='select' name='tags' id='' onChange={this.handleFilterChange}>
                         <option selected value='default'>All books</option>
-                        {this.state.genres.length ? this.state.genres.map(genre => 
+                        {(this.state.genres || []).map(genre => 
                             <option value={genre.name}>{genre.name}</option>
-                        ) : ''}
+                        )}
                     </select>
                 </div>
                 <div className='landing__booklist'>
-                    {this.state.genres.length ? this.state.books.map(book => <Book 
+                    {(this.state.books || []).map(book => <Book 
                         {...book}
                         viewMode={true}
-                    />) : 
-                    ''}
+                    />)}
                 </div>
             </div>
         </div>
