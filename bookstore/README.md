@@ -95,7 +95,7 @@ Styles was made using SASS and BEM.
 
 ### **LIVE DEMO**
 
-<!-- [Bookstore live demo](http: "Bookstore") -->
+[Bookstore live demo](http: bookstore-test-danielvo.surge.sh)
 
 ---
 
