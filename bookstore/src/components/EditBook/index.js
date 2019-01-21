@@ -100,7 +100,7 @@ class EditBook extends Component {
                     <input className='editBook__input'
                         value={this.state.price} 
                         type='number' 
-                        maxlength='5'
+                        max='999'
                         placeholder='Introduce a price (Max. 5 characters)' 
                         onChange={this.handleEditBookPrice}
                     />

@@ -10,7 +10,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 40%;
+  width: auto;
+  max-width: 60%;
   margin: auto;
   background-color: #fff;
   border-radius: 5px;
