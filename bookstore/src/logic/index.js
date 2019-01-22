@@ -100,7 +100,7 @@ editBookGenre(oldGenre, newGenre) {
         const { id, title, price, author } = book
         await logic.editBook(id, title, newGenre, price, author)
         })
-    })
+    })()
   },
 
   /**
