@@ -24,8 +24,8 @@ function validateLogic(params) {
     })
 }
 //For run the app, uncomment this:
-// export default validateLogic
+export default validateLogic
 
 //For run the test, uncomment this:
-module.exports = validateLogic
+// module.exports = validateLogic
 
