@@ -473,7 +473,7 @@ describe("test logic", () => {
 
       beforeEach(async () => {
         books = await logic.retrieveBooks()
-        genre = "novel"
+        genre = "fantasy"
       })
 
       it("should succed on correct data", async () => {
